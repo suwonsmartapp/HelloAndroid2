@@ -1,40 +1,47 @@
 
 package com.example.suwonsmartapp.androidexam.mission;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.suwonsmartapp.androidexam.R;
 
-public class Mission01Activity extends AppCompatActivity {
+public class Mission01Activity extends AppCompatActivity implements View.OnClickListener {
+
+    private ImageView mImageView1;
+    private ImageView mImageView2;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mission01);
+
+        mImageView1 = (ImageView) findViewById(R.id.image1);
+        mImageView2 = (ImageView) findViewById(R.id.image2);
+
+        findViewById(R.id.upBtn).setOnClickListener(this);
+        findViewById(R.id.downBtn).setOnClickListener(this);
+
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girl);
+        mImageView1.setImageBitmap(mBitmap);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_mission01, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        // noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.upBtn:
+                mImageView1.setImageBitmap(mBitmap);
+                mImageView2.setImageBitmap(null);
+                break;
+            case R.id.downBtn:
+                mImageView1.setImageBitmap(null);
+                mImageView2.setImageBitmap(mBitmap);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
