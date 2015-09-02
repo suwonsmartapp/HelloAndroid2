@@ -5,4 +5,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_frame_layout">FrameLayoutActivity</string>
     <string name="title_activity_mission01">Mission01Activity</string>
+    <string name="title_activity_mission02">Mission02Activity</string>
 </resources>

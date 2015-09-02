@@ -19,10 +19,13 @@
         <activity android:name=".animation.TransitionDrawableExamActivity" />
         <activity
             android:name=".layout.FrameLayoutActivity"
-            android:label="@string/title_activity_frame_layout"></activity>
+            android:label="@string/title_activity_frame_layout" />
         <activity
             android:name=".mission.Mission01Activity"
-            android:label="@string/title_activity_mission01"></activity>
+            android:label="@string/title_activity_mission01" />
+        <activity
+            android:name=".mission.Mission02Activity"
+            android:label="@string/title_activity_mission02" />
     </application>
 
 </manifest>
