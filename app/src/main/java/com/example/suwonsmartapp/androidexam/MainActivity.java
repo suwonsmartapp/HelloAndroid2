@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
+import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -35,6 +36,15 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends ListActivity {
+
+    private final static Comparator<Map<String, Object>> sDisplayNameComparator =
+            new Comparator<Map<String, Object>>() {
+                private final Collator collator = Collator.getInstance();
+
+                public int compare(Map<String, Object> map1, Map<String, Object> map2) {
+                    return collator.compare(map1.get("title"), map2.get("title"));
+                }
+            };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,7 @@ public class MainActivity extends ListActivity {
 
         // 메뉴 추가 부분
         addItem(myData, "TransitionDrawable", TransitionDrawableExamActivity.class);
+        addItem(myData, "FrameLayout", FrameLayoutActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
@@ -62,15 +73,6 @@ public class MainActivity extends ListActivity {
 
         return myData;
     }
-
-    private final static Comparator<Map<String, Object>> sDisplayNameComparator =
-            new Comparator<Map<String, Object>>() {
-                private final Collator collator = Collator.getInstance();
-
-                public int compare(Map<String, Object> map1, Map<String, Object> map2) {
-                    return collator.compare(map1.get("title"), map2.get("title"));
-                }
-            };
 
     protected void addItem(List<Map<String, Object>> data, String name, Intent intent) {
         Map<String, Object> temp = new HashMap<>();
