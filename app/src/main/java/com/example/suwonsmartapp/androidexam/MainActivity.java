@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.example.suwonsmartapp.androidexam.activity.ActivityExamActivity;
 import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
@@ -70,6 +71,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "FrameLayout", FrameLayoutActivity.class);
         addItem(myData, "도전01. 한 화면에 두 개의 이미지뷰 배치하기", Mission01Activity.class);
         addItem(myData, "도전02. SMS 입력 화면 만들고 글자수 표시하기", Mission02Activity.class);
+        addItem(myData, "화면이동 예제", ActivityExamActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

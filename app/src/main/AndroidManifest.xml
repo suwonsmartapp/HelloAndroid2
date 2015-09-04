@@ -26,6 +26,12 @@
         <activity
             android:name=".mission.Mission02Activity"
             android:label="@string/title_activity_mission02" />
+        <activity
+            android:name=".activity.ActivityExamActivity"
+            android:label="@string/title_activity_activity_exam" />
+        <activity
+            android:name=".activity.TargetActivity"
+            android:label="@string/title_activity_target" />
     </application>
 
 </manifest>
