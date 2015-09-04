@@ -1,8 +1,10 @@
 
 package com.example.suwonsmartapp.androidexam.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ public class ActivityExamActivity extends AppCompatActivity implements View.OnCl
 
         findViewById(R.id.btn1).setOnClickListener(this);
         findViewById(R.id.btn2).setOnClickListener(this);
+        findViewById(R.id.dialog_btn).setOnClickListener(this);
     }
 
     @Override
@@ -38,8 +41,28 @@ public class ActivityExamActivity extends AppCompatActivity implements View.OnCl
             case R.id.btn2:
                 btn2click();
                 break;
+
+            case R.id.dialog_btn:
+                openDialog();
+                break;
         }
 
+    }
+
+    private void openDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityExamActivity.this);
+        builder.setTitle("타이틀");
+        builder.setMessage("메세지");
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(ActivityExamActivity.this, "확인 눌렸어요", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("닫기", null);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.show(); // 생성
     }
 
     private void btn2click() {
