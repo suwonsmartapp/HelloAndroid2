@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.suwonsmartapp.androidexam.activity.WebActivity">
+
+    <EditText
+        android:id="@+id/et_web_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="http://" />
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

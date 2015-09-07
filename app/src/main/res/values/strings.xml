@@ -8,4 +8,5 @@
     <string name="title_activity_mission02">Mission02Activity</string>
     <string name="title_activity_activity_exam">ActivityExamActivity</string>
     <string name="title_activity_target">TargetActivity</string>
+    <string name="title_activity_web">WebActivity</string>
 </resources>
