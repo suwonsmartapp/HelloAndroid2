@@ -26,6 +26,7 @@ import android.widget.SimpleAdapter;
 
 import com.example.suwonsmartapp.androidexam.activity.ActivityExamActivity;
 import com.example.suwonsmartapp.androidexam.activity.WebActivity;
+import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
@@ -74,6 +75,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "도전02. SMS 입력 화면 만들고 글자수 표시하기", Mission02Activity.class);
         addItem(myData, "화면이동 예제", ActivityExamActivity.class);
         addItem(myData, "WebView 연습", WebActivity.class);
+        addItem(myData, "Animation 연습", AnimationActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
