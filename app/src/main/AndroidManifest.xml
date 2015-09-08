@@ -46,6 +46,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".animation.AnimationActivity" />
+        <activity
+            android:name=".calendar.CalendarActivity"
+            android:label="@string/title_activity_calendar" />
     </application>
 
 </manifest>
