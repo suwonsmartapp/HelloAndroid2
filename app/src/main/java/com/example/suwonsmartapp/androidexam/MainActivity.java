@@ -28,6 +28,7 @@ import com.example.suwonsmartapp.androidexam.activity.ActivityExamActivity;
 import com.example.suwonsmartapp.androidexam.activity.WebActivity;
 import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
+import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
 import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
@@ -76,6 +77,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "화면이동 예제", ActivityExamActivity.class);
         addItem(myData, "WebView 연습", WebActivity.class);
         addItem(myData, "Animation 연습", AnimationActivity.class);
+        addItem(myData, "달력 만들기", CalendarActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
