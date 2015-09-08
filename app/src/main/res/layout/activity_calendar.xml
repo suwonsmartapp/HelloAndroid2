@@ -16,11 +16,13 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_prev_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이전 달" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,6 +31,7 @@
             android:textSize="30sp" />
 
         <Button
+            android:id="@+id/btn_next_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="다음 달" />
@@ -38,6 +41,6 @@
     <com.example.suwonsmartapp.androidexam.calendar.CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

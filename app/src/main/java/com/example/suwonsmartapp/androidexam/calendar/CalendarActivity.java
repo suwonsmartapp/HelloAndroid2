@@ -3,55 +3,55 @@ package com.example.suwonsmartapp.androidexam.calendar;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.suwonsmartapp.androidexam.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private List<Calendar> mList;
     private CalendarAdapter mCalendarAdapter;
     private CalendarView mCalendarView;
+
+    private TextView mTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        mList = new ArrayList<>();
+        mTitleTextView = (TextView) findViewById(R.id.tv_title);
 
-        // 오늘
-        Calendar calendar = Calendar.getInstance();
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-
-        // 마지막 날
-        int lastDay = calendar.getActualMaximum(Calendar.DATE);
-
-        // 이달의 첫 번째 날
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        int firstDay = calendar.get(Calendar.DAY_OF_WEEK);
-
-        // 공백
-        for (int i = 1; i < firstDay; i++) {
-            mList.add(null);
-        }
-        // 이번 달 달력 데이터
-        for (int i = 1; i <= lastDay; i++) {
-            mList.add(new GregorianCalendar(year, month, i));
-        }
+        // 버튼 이벤트 연결
+        findViewById(R.id.btn_prev_month).setOnClickListener(this);
+        findViewById(R.id.btn_next_month).setOnClickListener(this);
 
         // 어댑터 준비
-        mCalendarAdapter = new CalendarAdapter(this, mList);
+        mCalendarAdapter = new CalendarAdapter(this);
 
         // View 에 어댑터를 설정
         mCalendarView = (CalendarView) findViewById(R.id.calendar);
         mCalendarView.setAdapter(mCalendarAdapter);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_prev_month:
+                mCalendarAdapter.prevMonth();
+                break;
+            case R.id.btn_next_month:
+                mCalendarAdapter.nextMonth();
+                break;
+        }
+        updateTitle();
+    }
+
+    private void updateTitle() {
+        int year = mCalendarAdapter.getCalendar().get(Calendar.YEAR);
+        int month = mCalendarAdapter.getCalendar().get(Calendar.MONTH) + 1;
+        mTitleTextView.setText(year + "년 " + month + "월");
+    }
 }

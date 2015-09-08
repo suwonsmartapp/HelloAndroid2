@@ -29,5 +29,7 @@ public class CalendarView extends GridView {
     private void init() {
         setNumColumns(7); // 7열로 설정
         setBackgroundResource(android.R.color.darker_gray); // 배경을 회색으로
+        setHorizontalSpacing(1);
+        setVerticalSpacing(1);
     }
 }
