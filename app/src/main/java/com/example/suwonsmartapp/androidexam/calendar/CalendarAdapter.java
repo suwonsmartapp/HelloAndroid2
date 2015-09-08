@@ -3,6 +3,7 @@ package com.example.suwonsmartapp.androidexam.calendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class CalendarAdapter extends BaseAdapter {
 
+    private static final String TAG = CalendarAdapter.class.getSimpleName();
     private List<Calendar> mList;
     private Context mContext;
     private Calendar mCalendar;
@@ -37,10 +39,11 @@ public class CalendarAdapter extends BaseAdapter {
         mList = new ArrayList<>();
 
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH);
 
         // 마지막 날
-        int lastDay = calendar.getActualMaximum(Calendar.DATE);
+        int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        Log.d(TAG, "lastDay : " + lastDay);
 
         // 이달의 첫 번째 날
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -117,13 +120,18 @@ public class CalendarAdapter extends BaseAdapter {
         // Data 를 Layout 에 설정
         Calendar calendar = mList.get(position);
         if (calendar != null) {
-            holder.dateTextView.setText("" + calendar.get(Calendar.DATE));
+            holder.dateTextView.setText("" + calendar.get(Calendar.DAY_OF_MONTH));
 
             if (position % 7 == 0) {
                 holder.dateTextView.setTextColor(Color.RED);
+            } else if ((position + 1) % 7 == 0) {
+                holder.dateTextView.setTextColor(Color.BLUE);
+            } else {
+                holder.dateTextView.setTextColor(Color.BLACK);
             }
         } else {
             holder.dateTextView.setText("");
+
         }
 
         return convertView;
