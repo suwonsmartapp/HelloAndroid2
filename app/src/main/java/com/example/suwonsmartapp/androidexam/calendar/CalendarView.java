@@ -19,7 +19,7 @@ public class CalendarView extends GridView {
         this(context, attrs, 0);
     }
 
-    // Widget 에서 호출 했을 때
+    // xml 에서 넘어온 속성을 멤버변수로 셋팅하는 역할을 한다.
     public CalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
