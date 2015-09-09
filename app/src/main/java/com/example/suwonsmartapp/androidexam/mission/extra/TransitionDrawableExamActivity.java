@@ -1,5 +1,5 @@
 
-package com.example.suwonsmartapp.androidexam.animation;
+package com.example.suwonsmartapp.androidexam.mission.extra;
 
 import android.app.Activity;
 import android.graphics.Color;

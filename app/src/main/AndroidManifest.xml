@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".animation.TransitionDrawableExamActivity" />
+        <activity android:name=".mission.extra.TransitionDrawableExamActivity" />
         <activity
             android:name=".layout.FrameLayoutActivity"
             android:label="@string/title_activity_frame_layout" />
