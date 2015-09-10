@@ -1,11 +1,13 @@
 
-package com.example.suwonsmartapp.androidexam.calendar;
+package com.example.suwonsmartapp.androidexam.calendar.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.example.suwonsmartapp.androidexam.calendar.adapter.CalendarAdapter;
 
 /**
  * Created by junsuk on 15. 9. 8.. 달력

@@ -1,5 +1,5 @@
 
-package com.example.suwonsmartapp.androidexam.calendar;
+package com.example.suwonsmartapp.androidexam.calendar.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
