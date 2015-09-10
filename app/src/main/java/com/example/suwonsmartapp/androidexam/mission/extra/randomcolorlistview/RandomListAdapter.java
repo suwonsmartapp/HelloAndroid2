@@ -45,17 +45,30 @@ public class RandomListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.item_simple_data3, parent,
-                false);
+        ViewHolder holder;
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_image);
-        TextView text1 = (TextView) convertView.findViewById(R.id.tv_text1);
-        TextView text2 = (TextView) convertView.findViewById(R.id.tv_text2);
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_simple_data3, parent,
+                    false);
+
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_image);
+            TextView text1 = (TextView) convertView.findViewById(R.id.tv_text1);
+            TextView text2 = (TextView) convertView.findViewById(R.id.tv_text2);
+
+            holder.imageView = imageView;
+            holder.text1 = text1;
+            holder.text2 = text2;
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
         Data data = mList.get(position);
-        imageView.setImageResource(R.mipmap.ic_launcher);
-        text1.setText(data.getTextView1());
-        text2.setText(data.getTextView2());
+        holder.imageView.setImageResource(R.mipmap.ic_launcher);
+        holder.text1.setText(data.getTextView1());
+        holder.text2.setText(data.getTextView2());
 
         convertView.setBackgroundColor(getRandomColor());
 
@@ -65,6 +78,12 @@ public class RandomListAdapter extends BaseAdapter {
     private int getRandomColor() {
         Random rnd = new Random();
         return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    }
+
+    static class ViewHolder {
+        ImageView imageView;
+        TextView text1;
+        TextView text2;
     }
 
 }
