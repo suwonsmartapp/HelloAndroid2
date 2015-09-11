@@ -34,6 +34,7 @@ import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
 import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
 import com.example.suwonsmartapp.androidexam.mission.extra.randomcolorlistview.RandomColorListActivity;
+import com.example.suwonsmartapp.androidexam.thread.ThreadActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "달력 만들기", CalendarActivity.class);
         addItem(myData, "달력 (Android 내장)", Calendar2Activity.class);
         addItem(myData, "Extra Mission - 랜덤색상ListView", RandomColorListActivity.class);
+        addItem(myData, "Thread", ThreadActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

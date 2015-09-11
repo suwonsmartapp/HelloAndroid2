@@ -51,6 +51,7 @@
             android:label="@string/title_activity_calendar" />
         <activity android:name=".calendar2.Calendar2Activity" />
         <activity android:name=".mission.extra.randomcolorlistview.RandomColorListActivity" />
+        <activity android:name=".thread.ThreadActivity" />
     </application>
 
 </manifest>
