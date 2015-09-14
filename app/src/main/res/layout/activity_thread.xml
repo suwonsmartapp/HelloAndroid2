@@ -21,11 +21,18 @@
         android:id="@+id/btn_thread2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thread2" />
+        android:text="AsyncTask" />
 
     <TextView
         android:id="@+id/tv_number2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
 </LinearLayout>
