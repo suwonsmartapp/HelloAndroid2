@@ -5,11 +5,11 @@ package com.example.suwonsmartapp.androidexam.parsing.json;
  * Created by junsuk on 15. 9. 14..
  */
 public class Weather {
-    private long time;
+    private String time;
     private String temp;
     private String description;
 
-    public Weather(long time, String temp, String description) {
+    public Weather(String time, String temp, String description) {
         this.description = description;
         this.temp = temp;
         this.time = time;
@@ -31,11 +31,11 @@ public class Weather {
         this.temp = temp;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

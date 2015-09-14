@@ -19,7 +19,8 @@
             android:id="@+id/et_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="city" />
+            android:hint="city"
+            android:singleLine="true" />
 
         <ListView
             android:id="@+id/lv_weather"

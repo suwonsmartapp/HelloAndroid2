@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.example.suwonsmartapp.androidexam.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,8 +20,6 @@ public class WeatherAdapter extends BaseAdapter {
     private static final String TAG = WeatherAdapter.class.getSimpleName();
     private List<Weather> mList;
     private Context mContext;
-
-    private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm");
 
     public WeatherAdapter(Context context, List<Weather> data) {
         mContext = context;
@@ -71,9 +67,8 @@ public class WeatherAdapter extends BaseAdapter {
 
         // Data 를 Layout 에 설정
         Weather weather = mList.get(position);
-        Date date = new Date();
-        date.setTime(weather.getTime());
-        holder.timeTextView.setText(mFormat.format(date));
+
+        holder.timeTextView.setText(weather.getTime());
         holder.tempTextView.setText(weather.getTemp() + "℃");
         holder.descTextView.setText(weather.getDescription());
 

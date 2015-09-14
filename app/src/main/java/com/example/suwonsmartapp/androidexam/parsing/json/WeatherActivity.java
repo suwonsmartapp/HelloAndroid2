@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,12 +28,12 @@ import java.util.List;
 /**
  * Created by junsuk on 15. 9. 14.. 날씨 정보 보여주는 앱
  */
-public class WeatherActivity extends Activity {
+public class WeatherActivity extends Activity implements View.OnKeyListener {
 
     private static final String TAG = WeatherActivity.class.getSimpleName();
 
     // 날씨 예보 제공 URL
-    private static final String URL_FORECAST = "http://api.openweathermap.org/data/2.5/forecast?q=suwon&units=metric";
+    private static final String URL_FORECAST = "http://api.openweathermap.org/data/2.5/forecast?units=metric&q=";
 
     private EditText mCityEditText;
     private ListView mWeatherListView;
@@ -55,11 +56,14 @@ public class WeatherActivity extends Activity {
      * @throws Exception
      * @Note : url 커넥션
      */
-    public static URLConnection getUrlConnection()
+    public static URLConnection getUrlConnection(String city)
             throws Exception {
 
+        if ("".equals(city)) {
+            city = "suwon";
+        }
         // URL 조합
-        String urlString = URL_FORECAST;
+        String urlString = URL_FORECAST + city;
 
         URL url = new URL(urlString); // 넘어오는 URL밎정보
         URLConnection connection = url.openConnection(); // 커넥션
@@ -103,12 +107,16 @@ public class WeatherActivity extends Activity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
+        mCityEditText.setOnKeyListener(this);
+
         // Android 4.0 부터 네트워킹 제약
         showWeatherInfo();
     }
 
     public void showWeatherInfo() {
         mProgressBar.setVisibility(View.VISIBLE);
+
+        final String city = mCityEditText.getText().toString();
 
         // 네트워킹 처리는 반드시 Thread 에서 해야 한다!!!
         new Thread(new Runnable() {
@@ -117,7 +125,7 @@ public class WeatherActivity extends Activity {
 
                 try {
                     // HTTP 에서 내용을 String 으로 받아 온다
-                    String jsonString = getReturnString(getUrlConnection());
+                    String jsonString = getReturnString(getUrlConnection(city));
 
                     // 받아온 JSON String 을 JSON Object로 변환한다
                     JSONObject jsonObject = new JSONObject(jsonString);
@@ -129,7 +137,8 @@ public class WeatherActivity extends Activity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        long time = object.getLong("dt");
+                        String time = object.getString("dt_txt");
+                        time = time.split(" ")[1].substring(0, 5);
                         String temp = object.getJSONObject("main").getString("temp");
                         String description = object.getJSONArray("weather")
                                 .getJSONObject(0).getString("description");
@@ -150,16 +159,13 @@ public class WeatherActivity extends Activity {
 
     }
 
-    /**
-     * useUrl
-     *
-     * @throws IOException
-     * @throws Exception
-     * @Note : URL커넥션 사용
-     */
-    public void useUrl() throws Exception {
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            showWeatherInfo();
+            return true;
+        }
 
-        String testVal = getReturnString(getUrlConnection());
-        Log.d(TAG, testVal);
+        return false;
     }
 }
