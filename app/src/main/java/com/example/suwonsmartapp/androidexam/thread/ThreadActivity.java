@@ -29,10 +29,13 @@ public class ThreadActivity extends AppCompatActivity implements View.OnClickLis
     private TextView mNumberTextView2;
 
     private ProgressBar mProgressBar;
+    private DownloadTask mDownloadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate");
 
         setContentView(R.layout.activity_thread);
 
@@ -52,17 +55,25 @@ public class ThreadActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_thread1:
-                progressDialogExam();
+                // progressDialogExam();
 
                 // 굉장히 오래 걸리는 처리 (10초)
                 // for (...)
 
                 // 완료되었습니다.
 
+                mDownloadTask.cancel(true);
+
                 break;
             case R.id.btn_thread2:
 
-                new DownloadTask().execute();
+                if (mDownloadTask == null
+                        || mDownloadTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    // 실행 할 때 마다 인스턴스 생성
+                    mDownloadTask = new DownloadTask();
+                    mDownloadTask.execute();
+                }
+
                 break;
 
         }
@@ -180,6 +191,53 @@ public class ThreadActivity extends AppCompatActivity implements View.OnClickLis
         thread.start();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d(TAG, "onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(TAG, "onDestroy");
+
+        if (mDownloadTask != null) {
+            mDownloadTask.cancel(true);
+            mDownloadTask = null;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(TAG, "onStop");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d(TAG, "onResume");
+    }
+
     private class DownloadTask extends AsyncTask<Void, Integer, Void> {
         private AlertDialog.Builder mmBuilder;
 
@@ -234,6 +292,20 @@ public class ThreadActivity extends AppCompatActivity implements View.OnClickLis
             super.onPostExecute(aVoid);
 
             mmBuilder.show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+
+            Log.i(TAG, "Task is cancelled - 1");
+        }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
+
+            Log.i(TAG, "Task is cancelled - 2");
         }
     }
 }
