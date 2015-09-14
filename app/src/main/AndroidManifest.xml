@@ -52,6 +52,7 @@
         <activity android:name=".calendar2.Calendar2Activity" />
         <activity android:name=".mission.extra.randomcolorlistview.RandomColorListActivity" />
         <activity android:name=".thread.ThreadActivity" />
+        <activity android:name=".parsing.json.WeatherActivity" />
     </application>
 
 </manifest>
