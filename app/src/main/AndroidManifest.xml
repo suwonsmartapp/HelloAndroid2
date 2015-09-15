@@ -53,6 +53,7 @@
         <activity android:name=".mission.extra.randomcolorlistview.RandomColorListActivity" />
         <activity android:name=".thread.ThreadActivity" />
         <activity android:name=".parsing.json.WeatherActivity" />
+        <activity android:name=".fragment.FragmentActivity" />
     </application>
 
 </manifest>
