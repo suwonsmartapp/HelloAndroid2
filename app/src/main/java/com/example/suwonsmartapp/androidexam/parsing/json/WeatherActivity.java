@@ -2,9 +2,8 @@
 package com.example.suwonsmartapp.androidexam.parsing.json;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,14 +36,6 @@ public class WeatherActivity extends Activity implements View.OnKeyListener {
 
     private ProgressBar mProgressBar;
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            mWeatherListView.setAdapter(mAdapter);
-            mProgressBar.setVisibility(View.GONE);
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,63 +49,67 @@ public class WeatherActivity extends Activity implements View.OnKeyListener {
 
         mCityEditText.setOnKeyListener(this);
 
-        // Android 4.0 부터 네트워킹 제약
-        showWeatherInfo();
-    }
-
-    public void showWeatherInfo() {
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        final String city = mCityEditText.getText().toString();
-
-        // 네트워킹 처리는 반드시 Thread 에서 해야 한다!!!
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    // HTTP 에서 내용을 String 으로 받아 온다
-                    String jsonString = NetworkUtil.getReturnString(URL_FORECAST + city);
-
-                    // 받아온 JSON String 을 JSON Object로 변환한다
-                    JSONObject jsonObject = new JSONObject(jsonString);
-                    JSONArray jsonArray = jsonObject.getJSONArray("list");
-
-                    // 날씨 정보 저장할 리스트
-                    List<Weather> weatherList = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-
-                        String time = object.getString("dt_txt");
-                        time = time.split(" ")[1].substring(0, 5);
-                        String temp = object.getJSONObject("main").getString("temp");
-                        String description = object.getJSONArray("weather")
-                                .getJSONObject(0).getString("description");
-
-                        weatherList.add(new Weather(time, temp, description));
-                    }
-
-                    mAdapter = new WeatherAdapter(WeatherActivity.this, weatherList);
-
-                    // UI 갱신을 핸들러에 요청
-                    mHandler.sendEmptyMessage(0);
-
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                }
-            }
-        }).start();
-
+        new WeatherInfoLoadTask().execute("suwon");
     }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            showWeatherInfo();
+            new WeatherInfoLoadTask().execute(mCityEditText.getText().toString());
             return true;
         }
 
         return false;
+    }
+
+    class WeatherInfoLoadTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String query = params[0];
+
+            try {
+                // HTTP 에서 내용을 String 으로 받아 온다
+                String jsonString = NetworkUtil.getReturnString(URL_FORECAST + query);
+
+                // 받아온 JSON String 을 JSON Object로 변환한다
+                JSONObject jsonObject = new JSONObject(jsonString);
+                JSONArray jsonArray = jsonObject.getJSONArray("list");
+
+                // 날씨 정보 저장할 리스트
+                List<Weather> weatherList = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+
+                    String time = object.getString("dt_txt");
+                    time = time.split(" ")[1].substring(0, 5);
+                    String temp = object.getJSONObject("main").getString("temp");
+                    String description = object.getJSONArray("weather")
+                            .getJSONObject(0).getString("description");
+
+                    weatherList.add(new Weather(time, temp, description));
+                }
+
+                mAdapter = new WeatherAdapter(WeatherActivity.this, weatherList);
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            mWeatherListView.setAdapter(mAdapter);
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 }
