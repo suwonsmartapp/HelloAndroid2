@@ -13,15 +13,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.utils.network.NetworkUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,53 +44,6 @@ public class WeatherActivity extends Activity implements View.OnKeyListener {
             mProgressBar.setVisibility(View.GONE);
         }
     };
-
-    /**
-     * getUrlConnection
-     *
-     * @return
-     * @throws Exception
-     * @Note : url 커넥션
-     */
-    public static URLConnection getUrlConnection(String city)
-            throws Exception {
-
-        if ("".equals(city)) {
-            city = "suwon";
-        }
-        // URL 조합
-        String urlString = URL_FORECAST + city;
-
-        URL url = new URL(urlString); // 넘어오는 URL밎정보
-        URLConnection connection = url.openConnection(); // 커넥션
-        connection.setDoOutput(true);
-        return connection;
-    }
-
-    /**
-     * getReturnString
-     *
-     * @param connection
-     * @return
-     * @throws IOException
-     * @Note : 커넥션된 결과값
-     */
-    public static String getReturnString(URLConnection connection)
-            throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                connection.getInputStream(), "UTF-8")); // 반환되는 값이 UTF-8 경우
-        StringBuffer buffer = new StringBuffer();
-        String decodedString;
-
-        while ((decodedString = in.readLine()) != null) {
-            buffer.append(decodedString);
-
-        }
-
-        in.close();
-
-        return buffer.toString();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +74,7 @@ public class WeatherActivity extends Activity implements View.OnKeyListener {
 
                 try {
                     // HTTP 에서 내용을 String 으로 받아 온다
-                    String jsonString = getReturnString(getUrlConnection(city));
+                    String jsonString = NetworkUtil.getReturnString(URL_FORECAST + city);
 
                     // 받아온 JSON String 을 JSON Object로 변환한다
                     JSONObject jsonObject = new JSONObject(jsonString);
