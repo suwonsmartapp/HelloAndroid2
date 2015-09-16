@@ -55,6 +55,19 @@
         <activity android:name=".parsing.json.WeatherActivity" />
         <activity android:name=".fragment.FragmentActivity" />
         <activity android:name=".viewpager.ScreenSlideActivity" />
+
+        <activity android:name=".receiver.BroadcastActivity" />
+
+        <receiver
+            android:name=".receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+                <action android:name="android.intent.action.MY_BROADCAST" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

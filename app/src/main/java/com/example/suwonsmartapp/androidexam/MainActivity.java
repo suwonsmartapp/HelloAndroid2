@@ -36,6 +36,7 @@ import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
 import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
 import com.example.suwonsmartapp.androidexam.mission.extra.randomcolorlistview.RandomColorListActivity;
 import com.example.suwonsmartapp.androidexam.parsing.json.WeatherActivity;
+import com.example.suwonsmartapp.androidexam.receiver.BroadcastActivity;
 import com.example.suwonsmartapp.androidexam.thread.ThreadActivity;
 import com.example.suwonsmartapp.androidexam.viewpager.ScreenSlideActivity;
 
@@ -90,6 +91,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "JSON 파싱 - 날씨정보", WeatherActivity.class);
         addItem(myData, "Fragment", FragmentActivity.class);
         addItem(myData, "ViewPager", ScreenSlideActivity.class);
+        addItem(myData, "BroadcastReceiver", BroadcastActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
