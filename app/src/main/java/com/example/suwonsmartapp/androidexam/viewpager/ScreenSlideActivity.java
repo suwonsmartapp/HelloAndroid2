@@ -39,7 +39,8 @@ public class ScreenSlideActivity extends AppCompatActivity {
         mList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             mList.add(new ColorFragment());
-            mTabLayout.addTab(mTabLayout.newTab().setText("Tab " + (i + 1)));
+            mTabLayout.addTab(mTabLayout.newTab().setText("Tab " + (i + 1))
+                    .setIcon(R.mipmap.ic_launcher));
         }
 
         final ScreenSlidePagerAdapter adapter = new ScreenSlidePagerAdapter(
