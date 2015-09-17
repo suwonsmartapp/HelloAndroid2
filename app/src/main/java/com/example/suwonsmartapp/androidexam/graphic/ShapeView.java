@@ -19,6 +19,9 @@ import android.view.WindowManager;
  */
 public class ShapeView extends View {
     private static final String TAG = ShapeView.class.getSimpleName();
+
+    private static final float TOUCH_TOLERANCE = 4;
+
     float mX;
     float mY;
     private Path mPath;
@@ -78,9 +81,14 @@ public class ShapeView extends View {
                 mPath.moveTo(mX, mY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                mPath.quadTo(mX, mY, event.getX(), event.getY());
-                mX = event.getX();
-                mY = event.getY();
+                float dx = Math.abs(event.getX() - mX);
+                float dy = Math.abs(event.getY() - mY);
+
+                if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+                    mPath.quadTo(mX, mY, event.getX(), event.getY());
+                    mX = event.getX();
+                    mY = event.getY();
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 mCanvas.drawPath(mPath, mPaint);
