@@ -1,7 +1,9 @@
 
 package com.example.suwonsmartapp.androidexam.graphic;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -78,6 +80,11 @@ public class GraphicActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // 미디어 스캔을 강제로 하도록 브로드캐스트를 발송
+            sendBroadcast(new Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.parse("file://" + file.toString())));
 
         } else {
             Toast.makeText(GraphicActivity.this, "메모리를 사용할 수 없습니다", Toast.LENGTH_SHORT).show();

@@ -59,6 +59,7 @@ public class ShapeView extends View {
 
         mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
+        mCanvas.drawColor(Color.WHITE);
     }
 
     @Override
