@@ -14,9 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by junsuk on 15. 9. 17..
  */
@@ -26,7 +23,6 @@ public class ShapeView extends View {
     float mY;
     private Path mPath;
     private Paint mPaint;
-    private List<Path> mList;
     private Bitmap mBitmap;
     private Canvas mCanvas;
 
@@ -48,8 +44,6 @@ public class ShapeView extends View {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(5);
-
-        mList = new ArrayList<>();
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
