@@ -28,6 +28,7 @@ import com.example.suwonsmartapp.androidexam.activity.ActivityExamActivity;
 import com.example.suwonsmartapp.androidexam.activity.WebActivity;
 import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
+import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
 import com.example.suwonsmartapp.androidexam.mission.extra.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
 import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
@@ -92,6 +93,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Fragment", FragmentActivity.class);
         addItem(myData, "ViewPager", ScreenSlideActivity.class);
         addItem(myData, "BroadcastReceiver", BroadcastActivity.class);
+        addItem(myData, "Graphic", GraphicActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

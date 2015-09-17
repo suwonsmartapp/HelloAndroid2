@@ -58,6 +58,8 @@
 
         <activity android:name=".receiver.BroadcastActivity" />
 
+        <activity android:name=".graphic.GraphicActivity" />
+
         <receiver
             android:name=".receiver.MyReceiver"
             android:enabled="true"
