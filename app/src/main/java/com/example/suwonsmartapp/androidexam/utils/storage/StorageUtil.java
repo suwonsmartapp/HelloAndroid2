@@ -4,7 +4,7 @@ package com.example.suwonsmartapp.androidexam.utils.storage;
 import android.os.Environment;
 
 /**
- * Created by junsuk on 15. 9. 17..
+ * Created by junsuk on 15. 9. 17.. 스토리지 유틸
  */
 public class StorageUtil {
 

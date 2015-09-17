@@ -4,6 +4,7 @@ package com.example.suwonsmartapp.androidexam.graphic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -46,6 +47,7 @@ public class ShapeView extends View {
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(Color.YELLOW);
         mPaint.setStrokeWidth(5);
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
