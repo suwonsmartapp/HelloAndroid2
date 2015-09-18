@@ -1,7 +1,9 @@
 
 package com.example.suwonsmartapp.androidexam.database.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -35,6 +37,49 @@ public class UserDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public long insert(String nickName, String email, String password) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(UserContract.UserEntry.COLUMN_NAME_NICKNAME, nickName);
+        values.put(UserContract.UserEntry.COLUMN_NAME_EMAIL, email);
+        values.put(UserContract.UserEntry.COLUMN_NAME_PASSWORD, password);
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        newRowId = db.insert(
+                UserContract.UserEntry.TABLE_NAME,
+                null,
+                values);
+
+        return newRowId;
+    }
+
+    public Cursor query() {
+        SQLiteDatabase db = getReadableDatabase();
+
+        // 컬럼명 정의
+        String[] projection = {
+                UserContract.UserEntry._ID,
+                UserContract.UserEntry.COLUMN_NAME_NICKNAME,
+                UserContract.UserEntry.COLUMN_NAME_EMAIL,
+                UserContract.UserEntry.COLUMN_NAME_PASSWORD
+        };
+
+        Cursor c = db.query(
+                UserContract.UserEntry.TABLE_NAME, // 테이블명
+                projection, // 컬럼명 배열
+                null, // WHERE 절의 컬럼명
+                null, // WHERE 절의 값
+                null, // group by (그룹핑)
+                null, // having (그룹핑)
+                null // order by (정렬)
+                );
+        return c;
     }
 
 }

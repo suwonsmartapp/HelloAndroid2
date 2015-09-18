@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.database.helper.UserDbHelper;
 
 /**
  * Created by junsuk on 15. 9. 18.. DB 연습 - 로그인 Activity
  */
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
+    private UserDbHelper mUserDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.tv_sign_up).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
+
+        mUserDbHelper = new UserDbHelper(this);
     }
 
     @Override
@@ -31,6 +36,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btn_login:
                 // Todo 로그인 처리
+                long insertedId = mUserDbHelper.insert("test", "test", "test");
+                if (insertedId != -1) {
+                    Toast.makeText(LogInActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LogInActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
