@@ -47,7 +47,7 @@ public class ShapeView extends View {
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(Color.YELLOW);
+        // mPaint.setColor(Color.YELLOW);
         mPaint.setStrokeWidth(5);
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -84,14 +84,18 @@ public class ShapeView extends View {
                 mPath.moveTo(mX, mY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                float dx = Math.abs(event.getX() - mX);
-                float dy = Math.abs(event.getY() - mY);
+                mPath.rewind();
+                mPath.moveTo(mX, mY);
+                mPath.lineTo(event.getX(), event.getY());
 
-                if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-                    mPath.quadTo(mX, mY, event.getX(), event.getY());
-                    mX = event.getX();
-                    mY = event.getY();
-                }
+                // float dx = Math.abs(event.getX() - mX);
+                // float dy = Math.abs(event.getY() - mY);
+
+                // if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+                // mPath.quadTo(mX, mY, event.getX(), event.getY());
+                // mX = event.getX();
+                // mY = event.getY();
+                // }
                 break;
             case MotionEvent.ACTION_UP:
                 mCanvas.drawPath(mPath, mPaint);

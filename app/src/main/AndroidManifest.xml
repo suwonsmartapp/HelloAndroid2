@@ -56,10 +56,10 @@
         <activity android:name=".parsing.json.WeatherActivity" />
         <activity android:name=".fragment.FragmentActivity" />
         <activity android:name=".viewpager.ScreenSlideActivity" />
-
         <activity android:name=".receiver.BroadcastActivity" />
-
         <activity android:name=".graphic.GraphicActivity" />
+        <activity android:name=".database.LogInActivity" />
+        <activity android:name=".database.SignUpActivity" />
 
         <receiver
             android:name=".receiver.MyReceiver"

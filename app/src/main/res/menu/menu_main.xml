@@ -8,4 +8,9 @@
         android:title="저장"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="100"
+        android:title="저장"
+        app:showAsAction="always" />
 </menu>
