@@ -2,12 +2,14 @@
 package com.example.suwonsmartapp.androidexam.database;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.database.contract.UserContract;
 import com.example.suwonsmartapp.androidexam.database.helper.UserDbHelper;
 
 /**
@@ -36,9 +38,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btn_login:
                 // Todo 로그인 처리
-                long insertedId = mUserDbHelper.insert("test", "test", "test");
-                if (insertedId != -1) {
-                    Toast.makeText(LogInActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                // long insertedId = mUserDbHelper.insert("test", "test",
+                // "test");
+                Cursor cursor = mUserDbHelper.query();
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    while (cursor.moveToNext()) {
+                        long itemId = cursor.getLong(cursor
+                                .getColumnIndexOrThrow(UserContract.UserEntry._ID));
+                        Toast.makeText(LogInActivity.this, "성공 : " + itemId, Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
                 } else {
                     Toast.makeText(LogInActivity.this, "실패", Toast.LENGTH_SHORT).show();
                 }
