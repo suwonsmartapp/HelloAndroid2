@@ -39,9 +39,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 // long insertedId = mUserDbHelper.insert("test", "test",
                 // "test");
 
-                int count = mUserDbHelper.update("test", "테스트");
-                if (count != 0) {
-                    Toast.makeText(LogInActivity.this, "Update 성공 : " + count, Toast.LENGTH_SHORT).show();
+//                int count = mUserDbHelper.update("test", "테스트");
+
+
+                if (mUserDbHelper.delete("test")) {
+                    Toast.makeText(LogInActivity.this, "Delete 성공", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LogInActivity.this, "Delete 실패", Toast.LENGTH_SHORT).show();
                 }
 
                 break;

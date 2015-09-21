@@ -105,4 +105,18 @@ public class UserDbHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    public boolean delete(String email) {
+        SQLiteDatabase db = getWritableDatabase();
+        // db.execSQL("DELETE FROM User WHERE email = '" + email + "';");
+
+        // 지울 조건
+        String selection = UserContract.UserEntry.COLUMN_NAME_EMAIL + " = '" + email + "'";
+        // Issue SQL statement.
+        int deleted = db.delete(UserContract.UserEntry.TABLE_NAME,
+                selection,
+                null);
+
+        return deleted != 0;
+    }
+
 }
