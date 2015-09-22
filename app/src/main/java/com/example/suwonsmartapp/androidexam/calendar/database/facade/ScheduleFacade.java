@@ -73,7 +73,6 @@ public class ScheduleFacade {
     private List<Schedule> cursorToList(Cursor cursor) {
         List<Schedule> list = new ArrayList<>();
 
-        cursor.moveToFirst();
         while (cursor.moveToNext()) {
             int hour = cursor.getInt(cursor
                     .getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME_HOUR));

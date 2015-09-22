@@ -49,7 +49,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 Cursor cursor = helper.query();
 
                 if (cursor != null) {
-                    cursor.moveToFirst();
                     while (cursor.moveToNext()) {
                         String email = cursor
                                 .getString(
