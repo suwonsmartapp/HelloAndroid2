@@ -15,15 +15,14 @@ import android.widget.TimePicker;
 import com.example.suwonsmartapp.androidexam.R;
 import com.example.suwonsmartapp.androidexam.calendar.adapter.CalendarAdapter;
 import com.example.suwonsmartapp.androidexam.calendar.adapter.TodoAdapter;
+import com.example.suwonsmartapp.androidexam.calendar.database.facade.ScheduleFacade;
 import com.example.suwonsmartapp.androidexam.calendar.model.Schedule;
 import com.example.suwonsmartapp.androidexam.calendar.view.CalendarView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CalendarActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
@@ -35,15 +34,15 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
     private ListView mTodoListView;
     private TodoAdapter mTodoAdapter;
 
-    // 모든 일정
-    private Map<Calendar, List<Schedule>> mScheduleMap;
+    // 모든 일정 (저장소) ->
+    private ScheduleFacade mScheduleFacade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        mScheduleMap = new HashMap<>();
+        mScheduleFacade = new ScheduleFacade(this);
 
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
 
@@ -113,7 +112,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                         editText.getText().toString());
 
                 // 현재 날짜에 연결 된 일정 리스트를 얻음
-                List<Schedule> list = mScheduleMap.get(calendar);
+                List<Schedule> list = mScheduleFacade.getSchedule(calendar);
 
                 // 만약 리스트가 없으면 초기화 한다
                 if (list == null) {
@@ -123,7 +122,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                 list.add(schedule);
 
                 // 전체 일정에 오늘 날짜와 스케쥴을 연결하여 추가
-                mScheduleMap.put(calendar, list);
+                mScheduleFacade.addSchedule(calendar, schedule);
 
                 // 어댑터에 표시할 스케쥴 리스트를 전달
                 mTodoAdapter = new TodoAdapter(CalendarActivity.this, list);
@@ -144,9 +143,9 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         mCalendarAdapter.setSelectedPosition(position);
         mCalendarAdapter.notifyDataSetChanged();
 
-        // 현재 날짜에 연결 된 일정 리스트를 얻음
+        // 현재 날짜에 연결 된 일정 리스트를 얻음 TODO DB 에서 데이타를 읽어옴 (select)
         Calendar calendar = (Calendar) mCalendarAdapter.getItem(position);
-        List<Schedule> list = mScheduleMap.get(calendar);
+        List<Schedule> list = mScheduleFacade.getSchedule(calendar);
 
         if (list == null) {
             list = Collections.emptyList();
