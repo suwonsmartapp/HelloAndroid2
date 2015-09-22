@@ -23,7 +23,7 @@ public class ScheduleFacade {
     private SimpleDateFormat mFormat;
 
     public ScheduleFacade(Context context) {
-        mHelper = new ScheduleDbHelper(context);
+        mHelper = ScheduleDbHelper.getInstance(context);
 
         mFormat = new SimpleDateFormat("yyyy-MM-dd");
     }

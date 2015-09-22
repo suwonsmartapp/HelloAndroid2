@@ -14,7 +14,6 @@ public class ScheduleDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Schedule.db";
     public static final int DATABASE_VERSION = 1;
-
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " +
             ScheduleContract.ScheduleEntry.TABLE_NAME + " (" +
             ScheduleContract.ScheduleEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -23,9 +22,17 @@ public class ScheduleDbHelper extends SQLiteOpenHelper {
             ScheduleContract.ScheduleEntry.COLUMN_NAME_CONTENTS + " TEXT NOT NULL, " +
             ScheduleContract.ScheduleEntry.COLUMN_NAME_DATE + " TEXT NOT NULL" +
             ");";
+    private static ScheduleDbHelper sSingleton = null;
 
-    public ScheduleDbHelper(Context context) {
+    private ScheduleDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static synchronized ScheduleDbHelper getInstance(Context context) {
+        if (sSingleton == null) {
+            sSingleton = new ScheduleDbHelper(context);
+        }
+        return sSingleton;
     }
 
     @Override
