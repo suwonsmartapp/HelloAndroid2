@@ -5,12 +5,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
 import com.example.suwonsmartapp.androidexam.calendar.adapter.CalendarAdapter;
@@ -69,6 +73,9 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         // 아이템 클릭 이벤트 연결
         mCalendarView.setOnItemLongClickListener(this);
         mCalendarView.setOnItemClickListener(this);
+
+        // 컨텍스트 메뉴 연결
+        registerForContextMenu(mTodoListView);
     }
 
     @Override
@@ -139,11 +146,15 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        loadSchedule(position);
+    }
+
+    private void loadSchedule(int position) {
         // 선택 된 것으로 하고 색상 변경
         mCalendarAdapter.setSelectedPosition(position);
         mCalendarAdapter.notifyDataSetChanged();
 
-        // 현재 날짜에 연결 된 일정 리스트를 얻음 TODO DB 에서 데이타를 읽어옴 (select)
+        // 현재 날짜에 연결 된 일정 리스트를 얻음
         Calendar calendar = (Calendar) mCalendarAdapter.getItem(position);
         List<Schedule> list = mScheduleFacade.getSchedule(calendar);
 
@@ -154,5 +165,39 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         mTodoAdapter = new TodoAdapter(CalendarActivity.this, list);
         // 리스트뷰에 어댑터를 연결
         mTodoListView.setAdapter(mTodoAdapter);
+    }
+
+    // 컨텍스트 메뉴 생성
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    // 컨텍스트 메뉴 처리
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // 아답터의 정보를 얻을 수 있는 객체
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                // TODO 삭제를 확인 하는 다이얼로그 띄우기
+                Schedule remove = (Schedule) mTodoAdapter.getItem(info.position);
+                if (mScheduleFacade.removeSchedule(remove)) {
+                    Toast.makeText(CalendarActivity.this, "삭제 하였습니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CalendarActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                }
+                // 달력을 다시 클릭한 것처럼 해서 DB에서 데이타를 다시 로드
+                loadSchedule(mCalendarAdapter.getSelectedPosition());
+                return true;
+            case R.id.menu_modify:
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

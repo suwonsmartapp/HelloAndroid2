@@ -4,6 +4,7 @@ package com.example.suwonsmartapp.androidexam.calendar.model;
 /**
  * Created by junsuk on 15. 9. 10.. 일정
  */
+// TODO Date, _ID 필드 추가
 public class Schedule {
     /**
      * 시간
