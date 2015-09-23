@@ -141,6 +141,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         builder.setView(layout);
 
         builder.show();
+
         return true;
     }
 
@@ -195,6 +196,44 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                 loadSchedule(mCalendarAdapter.getSelectedPosition());
                 return true;
             case R.id.menu_modify:
+                // TODO 1. 수정 다이얼로그 띄우기
+                View layout = getLayoutInflater().inflate(R.layout.dialog_schedule, null);
+                final TimePicker timePicker = (TimePicker) layout.findViewById(R.id.picker_time);
+                final EditText editText = (EditText) layout.findViewById(R.id.et_schedule);
+
+                // 롱 클릭한 곳의 Calendar 객체를 얻음
+                final Calendar calendar = (Calendar) mCalendarAdapter.getItem(info.position);
+
+                // 기존 데이타를 다이얼로그에 표시
+                final Schedule schedule = (Schedule) mTodoAdapter.getItem(info.position);
+                timePicker.setCurrentHour(schedule.getHour());
+                timePicker.setCurrentMinute(schedule.getMinute());
+                editText.setText(schedule.getContents());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setNegativeButton("닫기", null);
+                builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        schedule.setHour(timePicker.getCurrentHour());
+                        schedule.setMinute(timePicker.getCurrentMinute());
+                        schedule.setContents(editText.getText().toString());
+
+                        if (mScheduleFacade.modifySchedule(schedule) != 0) {
+                            Toast.makeText(CalendarActivity.this, "수정 하였습니다", Toast.LENGTH_SHORT)
+                                    .show();
+                            loadSchedule(mCalendarAdapter.getSelectedPosition());
+                        } else {
+                            Toast.makeText(CalendarActivity.this, "수정 실패 하였습니다", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+
+                    }
+                });
+
+                builder.setView(layout);
+
+                builder.show();
                 return true;
             default:
                 return super.onContextItemSelected(item);

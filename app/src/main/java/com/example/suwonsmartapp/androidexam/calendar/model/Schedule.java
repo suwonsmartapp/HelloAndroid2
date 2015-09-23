@@ -4,8 +4,12 @@ package com.example.suwonsmartapp.androidexam.calendar.model;
 /**
  * Created by junsuk on 15. 9. 10.. 일정
  */
-// TODO Date, _ID 필드 추가
 public class Schedule {
+
+    private long id;
+
+    private String date;
+
     /**
      * 시간
      */
@@ -25,6 +29,13 @@ public class Schedule {
         this.contents = contents;
         this.hour = hour;
         this.minute = minute;
+    }
+
+    public Schedule(long id, String date, int hour, int minute, String contents) {
+        this(hour, minute, contents);
+
+        this.id = id;
+        this.date = date;
     }
 
     public String getContents() {
@@ -49,6 +60,22 @@ public class Schedule {
 
     public void setMinute(int minute) {
         this.minute = minute;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override

@@ -81,8 +81,12 @@ public class ScheduleFacade {
                     .getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME_MINUTE));
             String contents = cursor.getString(cursor
                     .getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME_CONTENTS));
+            long id = cursor.getLong(cursor
+                    .getColumnIndexOrThrow(ScheduleContract.ScheduleEntry._ID));
+            String date = cursor.getString(cursor
+                    .getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME_DATE));
 
-            Schedule schedule = new Schedule(hour, minute, contents);
+            Schedule schedule = new Schedule(id, date, hour, minute, contents);
             list.add(schedule);
         }
         cursor.close();
@@ -104,5 +108,31 @@ public class ScheduleFacade {
                         "" + schedule.getHour(), "" + schedule.getMinute()
                 }
                 ) != 0;
+    }
+
+    /**
+     * 스케쥴 수정
+     *
+     * @param schedule 기존 데이타에 변경 할 값을 셋팅 해서 받아야 함
+     * @return the number of rows affected
+     */
+    public int modifySchedule(Schedule schedule) {
+        ContentValues values = new ContentValues();
+        values.put(ScheduleContract.ScheduleEntry.COLUMN_NAME_HOUR, schedule.getHour());
+        values.put(ScheduleContract.ScheduleEntry.COLUMN_NAME_MINUTE, schedule.getMinute());
+        values.put(ScheduleContract.ScheduleEntry.COLUMN_NAME_CONTENTS, schedule.getContents());
+
+        String whereClause = ScheduleContract.ScheduleEntry._ID + "=?";
+
+        String[] whereArgs = {
+            schedule.getId() + ""
+        };
+
+        return mHelper.getWritableDatabase().update(
+                ScheduleContract.ScheduleEntry.TABLE_NAME,
+                values,
+                whereClause,
+                whereArgs
+                );
     }
 }
