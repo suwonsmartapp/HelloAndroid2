@@ -31,6 +31,7 @@ import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
 import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
 import com.example.suwonsmartapp.androidexam.database.LogInActivity;
+import com.example.suwonsmartapp.androidexam.database.ParseLoginActivity;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
 import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
@@ -97,6 +98,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Graphic", GraphicActivity.class);
         addItem(myData, "Database", LogInActivity.class);
         addItem(myData, "Parcelable 전송", ParcelableActivity.class);
+        addItem(myData, "Database - Parse", ParseLoginActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
