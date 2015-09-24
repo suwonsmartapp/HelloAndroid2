@@ -1,11 +1,14 @@
 
 package com.example.suwonsmartapp.androidexam.database;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private UserDbHelper mUserDbHelper;
     private EditText mEmail;
     private EditText mPassword;
+    private CheckBox mCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,23 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         mEmail = (EditText) findViewById(R.id.edit_email);
         mPassword = (EditText) findViewById(R.id.edit_password);
+        mCheckBox = (CheckBox) findViewById(R.id.check_email);
 
         findViewById(R.id.tv_sign_up).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
 
         mUserDbHelper = new UserDbHelper(this);
+
+        // TODO SharedPreference 에 저장 된 값이 있으면 가져와서 mEmail 에 셋팅 (읽어오기)
+        // http://developer.android.com/intl/ko/training/basics/data-storage/shared-preferences.html#GetSharedPreferences
+
+        mEmail.setText(loadEmail());
+    }
+
+    private String loadEmail() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String email = sharedPref.getString("pref_email", "");
+        return email;
     }
 
     @Override
@@ -63,6 +79,14 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         if (email.equals(mEmail.getText().toString()) &&
                                 password.equals(mPassword.getText().toString())) {
                             Toast.makeText(LogInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+
+                            // TODO SharedPreference 에 email 값을 저장
+                            // http://developer.android.com/intl/ko/training/basics/data-storage/shared-preferences.html#GetSharedPreferences
+                            if (mCheckBox.isChecked()) {
+                                saveEmail(mEmail.getText().toString());
+                            } else {
+                                saveEmail("");
+                            }
                             return;
                         }
                     }
@@ -72,5 +96,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
         }
+    }
+
+    private void saveEmail(String email) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("pref_email", email);
+        // editor.commit(); // 동기식 sync
+        editor.apply(); // 비동기 async
     }
 }
