@@ -4,6 +4,7 @@ package com.example.suwonsmartapp.androidexam;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 
 /**
  * Created by junsuk on 15. 9. 24..
@@ -17,5 +18,7 @@ public class ParseApplication extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "jKKNLpQXtUjPMKyqatjkIUgFzoImzyAi7tGuMJ4C",
                 "3kv4S5nBUwiQVdftXUhEVQqS3vnQ2dbp4evcWm5F");
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
