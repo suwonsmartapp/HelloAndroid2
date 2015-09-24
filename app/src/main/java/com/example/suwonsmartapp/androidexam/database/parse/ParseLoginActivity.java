@@ -1,5 +1,5 @@
 
-package com.example.suwonsmartapp.androidexam.database;
+package com.example.suwonsmartapp.androidexam.database.parse;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.database.SignUpActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
