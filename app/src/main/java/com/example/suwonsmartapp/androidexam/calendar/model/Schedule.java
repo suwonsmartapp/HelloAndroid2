@@ -1,25 +1,33 @@
 
 package com.example.suwonsmartapp.androidexam.calendar.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by junsuk on 15. 9. 10.. 일정
  */
-public class Schedule {
+public class Schedule implements Parcelable {
 
+    public static final Parcelable.Creator<Schedule> CREATOR = new Parcelable.Creator<Schedule>() {
+        public Schedule createFromParcel(Parcel source) {
+            return new Schedule(source);
+        }
+
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
     private long id;
-
     private String date;
-
     /**
      * 시간
      */
     private int hour;
-
     /**
      * 분
      */
     private int minute;
-
     /**
      * 내용
      */
@@ -36,6 +44,14 @@ public class Schedule {
 
         this.id = id;
         this.date = date;
+    }
+
+    protected Schedule(Parcel in) {
+        this.id = in.readLong();
+        this.date = in.readString();
+        this.hour = in.readInt();
+        this.minute = in.readInt();
+        this.contents = in.readString();
     }
 
     public String getContents() {
@@ -81,5 +97,19 @@ public class Schedule {
     @Override
     public String toString() {
         return hour + ":" + minute + " " + contents;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.date);
+        dest.writeInt(this.hour);
+        dest.writeInt(this.minute);
+        dest.writeString(this.contents);
     }
 }

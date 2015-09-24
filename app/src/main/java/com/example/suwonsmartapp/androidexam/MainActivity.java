@@ -25,17 +25,18 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.suwonsmartapp.androidexam.activity.ActivityExamActivity;
+import com.example.suwonsmartapp.androidexam.activity.ParcelableActivity;
 import com.example.suwonsmartapp.androidexam.activity.WebActivity;
 import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
+import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
+import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
 import com.example.suwonsmartapp.androidexam.database.LogInActivity;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
 import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
-import com.example.suwonsmartapp.androidexam.mission.extra.TransitionDrawableExamActivity;
-import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
-import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
 import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
 import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
+import com.example.suwonsmartapp.androidexam.mission.extra.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.mission.extra.randomcolorlistview.RandomColorListActivity;
 import com.example.suwonsmartapp.androidexam.parsing.json.WeatherActivity;
 import com.example.suwonsmartapp.androidexam.receiver.BroadcastActivity;
@@ -44,7 +45,6 @@ import com.example.suwonsmartapp.androidexam.viewpager.ScreenSlideActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -96,10 +96,11 @@ public class MainActivity extends ListActivity {
         addItem(myData, "BroadcastReceiver", BroadcastActivity.class);
         addItem(myData, "Graphic", GraphicActivity.class);
         addItem(myData, "Database", LogInActivity.class);
+        addItem(myData, "Parcelable 전송", ParcelableActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
-        Collections.sort(myData, sDisplayNameComparator);
+        // Collections.sort(myData, sDisplayNameComparator);
 
         return myData;
     }

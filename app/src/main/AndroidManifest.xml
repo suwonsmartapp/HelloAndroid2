@@ -60,6 +60,7 @@
         <activity android:name=".graphic.GraphicActivity" />
         <activity android:name=".database.LogInActivity" />
         <activity android:name=".database.SignUpActivity" />
+        <activity android:name=".activity.ParcelableActivity" />
 
         <receiver
             android:name=".receiver.MyReceiver"
