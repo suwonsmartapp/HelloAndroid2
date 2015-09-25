@@ -18,7 +18,8 @@ import com.suwonsmartapp.abl.AsyncBitmapLoader;
 /**
  * Created by junsuk on 15. 9. 25..
  */
-public class LoadPictureAdapter extends CursorAdapter {
+public class LoadPictureAdapter extends CursorAdapter implements
+        AsyncBitmapLoader.BitmapLoadListener {
 
     private final LayoutInflater mLayoutInflater;
 
@@ -32,11 +33,12 @@ public class LoadPictureAdapter extends CursorAdapter {
 
         // 다이나믹 비트맵 로더 생성 및 이벤트 연결
         mAsyncBitmapLoader = new AsyncBitmapLoader(context);
+        mAsyncBitmapLoader.setBitmapLoadListener(this);
     }
 
     // 맨 처음 레이아웃 만드는 부분
     @Override
-    public View newView(final Context context, final Cursor cursor, ViewGroup parent) {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // 레이아웃 가져오기
         View view = mLayoutInflater.inflate(R.layout.item_picture, parent, false);
 
@@ -44,13 +46,6 @@ public class LoadPictureAdapter extends CursorAdapter {
         ViewHolder holder = new ViewHolder();
         holder.imageView = (ImageView) view.findViewById(R.id.imageView);
         view.setTag(holder);
-
-        mAsyncBitmapLoader.setBitmapLoadListener(new AsyncBitmapLoader.BitmapLoadListener() {
-            @Override
-            public Bitmap getBitmap(int position) {
-                return getCurrentBitmap(context, cursor);
-            }
-        });
 
         return view;
     }
@@ -61,19 +56,20 @@ public class LoadPictureAdapter extends CursorAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         // 이미지 셋팅
-        mAsyncBitmapLoader.loadBitmap(0, holder.imageView);
+        mAsyncBitmapLoader.loadBitmap(cursor.getPosition(), holder.imageView);
     }
 
-    private Bitmap getCurrentBitmap(Context context, Cursor cursor) {
+    @Override
+    public Bitmap getBitmap(int position) {
         // id 가져오기
-        long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+        long id = getItemId(position);
 
         // Bitmap 샘플링
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 1; // 2의 배수
 
         // id 로부터 bitmap 생성
-        return MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+        return MediaStore.Images.Thumbnails.getThumbnail(mContext.getContentResolver(),
                 id,
                 MediaStore.Images.Thumbnails.MINI_KIND,
                 options);
