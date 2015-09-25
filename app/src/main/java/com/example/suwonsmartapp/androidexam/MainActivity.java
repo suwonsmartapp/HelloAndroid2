@@ -41,6 +41,8 @@ import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
 import com.example.suwonsmartapp.androidexam.mission.extra.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.mission.extra.randomcolorlistview.RandomColorListActivity;
 import com.example.suwonsmartapp.androidexam.parsing.json.WeatherActivity;
+import com.example.suwonsmartapp.androidexam.provider.ContactLoaderActivity;
+import com.example.suwonsmartapp.androidexam.provider.LoadPictureActivity;
 import com.example.suwonsmartapp.androidexam.receiver.BroadcastActivity;
 import com.example.suwonsmartapp.androidexam.thread.ThreadActivity;
 import com.example.suwonsmartapp.androidexam.viewpager.ScreenSlideActivity;
@@ -101,6 +103,8 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Parcelable 전송", ParcelableActivity.class);
         addItem(myData, "Parse 로그인", ParseLoginActivity.class);
         addItem(myData, "Parse 로컬 DB", ParseLocalDatabaseActivity.class);
+        addItem(myData, "content provider, Loader - 연락처 ", ContactLoaderActivity.class);
+        addItem(myData, "content provider, Loader - 사진 ", LoadPictureActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
