@@ -19,6 +19,7 @@
     <permission
         android:name="com.example.suwonsmartapp.androidexam.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.example.suwonsmartapp.androidexam.permission.C2D_MESSAGE" />
 
     <application
@@ -113,14 +114,17 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
+                <!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="com.example.suwonsmartapp.androidexam" />
             </intent-filter>
         </receiver>
         <!-- Parse.com PUSH 서비스 사용 위한 부분. 끝 -->
 
+        <provider
+            android:name=".database.provider.UserProvider"
+            android:authorities="com.example.suwonsmartapp.androidexam.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>
