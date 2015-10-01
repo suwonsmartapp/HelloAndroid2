@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.suwonsmartapp.androidexam.R;
@@ -39,7 +40,15 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 pickFile();
                 break;
             case R.id.btn_play_pause:
-                mMediaPlayer.start(); // no need to call prepare(); create() does that for you
+                if (mMediaPlayer != null) {
+                    if (!mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.start(); // no need to call prepare(); create() does that for you
+                        ((ImageButton) v).setImageResource(android.R.drawable.ic_media_pause);
+                    } else {
+                        mMediaPlayer.pause();
+                        ((ImageButton) v).setImageResource(android.R.drawable.ic_media_play);
+                    }
+                }
                 break;
         }
     }
