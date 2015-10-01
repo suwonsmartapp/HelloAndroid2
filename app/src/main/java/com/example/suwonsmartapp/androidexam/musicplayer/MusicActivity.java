@@ -1,11 +1,14 @@
 package com.example.suwonsmartapp.androidexam.musicplayer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.example.suwonsmartapp.androidexam.R;
 
@@ -14,6 +17,8 @@ import com.example.suwonsmartapp.androidexam.R;
  */
 public class MusicActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_PICK_MUSIC = 1;
+    private ImageView mImageView;
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,9 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_music);
 
         findViewById(R.id.btn_file_pick).setOnClickListener(this);
+        findViewById(R.id.btn_play_pause).setOnClickListener(this);
+
+        mImageView = (ImageView) findViewById(R.id.iv_thumbnail);
     }
 
     @Override
@@ -29,6 +37,9 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_file_pick:
                 pickFile();
+                break;
+            case R.id.btn_play_pause:
+                mMediaPlayer.start(); // no need to call prepare(); create() does that for you
                 break;
         }
     }
@@ -57,7 +68,17 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
             String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
             String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
 
-            Toast.makeText(MusicActivity.this, album + ", " + title + ", " + artist + ", " + duration, Toast.LENGTH_SHORT).show();
+            // 타이틀 변경
+            getSupportActionBar().setTitle(title + " - " + artist);
+
+            // 앨범 사진
+            byte albumImage[] = retriever.getEmbeddedPicture();
+            if (null != albumImage) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
+                mImageView.setImageBitmap(bitmap);
+            }
+
+            mMediaPlayer = MediaPlayer.create(this, data.getData());
         }
 
     }
