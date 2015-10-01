@@ -83,6 +83,7 @@
         <activity android:name=".database.parse.ParseLocalDatabaseActivity" />
         <activity android:name=".provider.ContactLoaderActivity" />
         <activity android:name=".provider.LoadPictureActivity" />
+        <activity android:name=".musicplayer.MusicActivity" />
 
         <receiver
             android:name=".receiver.MyReceiver"

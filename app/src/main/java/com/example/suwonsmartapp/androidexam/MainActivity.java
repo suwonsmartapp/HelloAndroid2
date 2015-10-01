@@ -40,6 +40,7 @@ import com.example.suwonsmartapp.androidexam.mission.Mission01Activity;
 import com.example.suwonsmartapp.androidexam.mission.Mission02Activity;
 import com.example.suwonsmartapp.androidexam.mission.extra.TransitionDrawableExamActivity;
 import com.example.suwonsmartapp.androidexam.mission.extra.randomcolorlistview.RandomColorListActivity;
+import com.example.suwonsmartapp.androidexam.musicplayer.MusicActivity;
 import com.example.suwonsmartapp.androidexam.parsing.json.WeatherActivity;
 import com.example.suwonsmartapp.androidexam.provider.ContactLoaderActivity;
 import com.example.suwonsmartapp.androidexam.provider.LoadPictureActivity;
@@ -105,6 +106,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Parse 로컬 DB", ParseLocalDatabaseActivity.class);
         addItem(myData, "content provider, Loader - 연락처 ", ContactLoaderActivity.class);
         addItem(myData, "content provider, Loader - 사진 ", LoadPictureActivity.class);
+        addItem(myData, "Service - Music Player", MusicActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
