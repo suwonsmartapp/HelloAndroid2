@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
     private SimpleDateFormat mFormat;
 
     private SeekBarUpdateTask mSeekBarUpdateTask;
+    private ImageButton mPlayButton;
 
     public static String getTime(long milliSeconds) {
         String result = "";
@@ -44,7 +46,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         int minute = (time - (hour * 3600)) / 60;
         int second = time - ((hour * 3600) + (minute * 60));
 
-        return String.format("%2d:%02d", minute, second);
+        return String.format("%d:%02d", minute, second);
     }
 
     public static String getTimeToString(int time) {
@@ -65,9 +67,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         setContentView(R.layout.activity_music);
 
-        findViewById(R.id.btn_file_pick).setOnClickListener(this);
-        findViewById(R.id.btn_play_pause).setOnClickListener(this);
-
+        mPlayButton = (ImageButton) findViewById(R.id.btn_play_pause);
         mInfoTextView = (TextView) findViewById(R.id.tv_info);
         mCurrentTimeTextView = (TextView) findViewById(R.id.tv_current_time);
         mEndTimeTextView = (TextView) findViewById(R.id.tv_end_time);
@@ -76,6 +76,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         mFormat = new SimpleDateFormat("mm:ss");
 
+        findViewById(R.id.btn_file_pick).setOnClickListener(this);
+        mPlayButton.setOnClickListener(this);
         mSeekBar.setOnSeekBarChangeListener(this);
 
     }
@@ -120,43 +122,64 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         // 정보들을 화면에 표시
         if (resultCode == RESULT_OK && requestCode == REQUEST_PICK_MUSIC) {
-            mMediaPlayer = MediaPlayer.create(this, data.getData());
-
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.setDataSource(getApplicationContext(), data.getData());
-            String album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-            String title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-            String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-            String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-
-            // 타이틀 변경
-            getSupportActionBar().setTitle(title + " - " + artist);
-
-            // 앨범 사진
-            byte albumImage[] = retriever.getEmbeddedPicture();
-            if (null != albumImage) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
-                mImageView.setImageBitmap(bitmap);
+            // 초기화
+            if (mMediaPlayer != null) {
+                reset();
             }
 
-            // 나머지 정보 표시
-            mInfoTextView.setText(album + " / " + title + " / " + artist);
-
-            // 종료 시간 표시
-            long lDuration = Long.parseLong(duration);
-            String endTime = mFormat.format(lDuration);
-            mEndTimeTextView.setText(endTime);
-
-            // SeekBar 최대값 설정
-            mSeekBar.setMax(mMediaPlayer.getDuration());
+            loadInfo(data);
 
         }
 
     }
 
+    private void loadInfo(Intent data) {
+        mMediaPlayer = MediaPlayer.create(this, data.getData());
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(getApplicationContext(), data.getData());
+        String album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        String title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+        // 타이틀 변경
+        getSupportActionBar().setTitle(title + " - " + artist);
+
+        // 앨범 사진
+        byte albumImage[] = retriever.getEmbeddedPicture();
+        if (null != albumImage) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
+            mImageView.setImageBitmap(bitmap);
+        }
+
+        // 나머지 정보 표시
+        mInfoTextView.setText(album + " / " + title + " / " + artist);
+
+        // 종료 시간 표시
+        long lDuration = Long.parseLong(duration);
+        String endTime = mFormat.format(lDuration);
+        mEndTimeTextView.setText(endTime);
+
+        // SeekBar 최대값 설정
+        mSeekBar.setMax(mMediaPlayer.getDuration());
+    }
+
+    private void reset() {
+        mMediaPlayer.reset();
+        mCurrentTimeTextView.setText("0:00");
+        mSeekBar.setProgress(0);
+        mSeekBarUpdateTask = null;
+        mPlayButton.setSelected(false);
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        // 유저가 SeekBar를 터치 한 것이면
+        if (fromUser) {
+            mCurrentTimeTextView.setText(getTime(progress));
+            mMediaPlayer.seekTo(progress);
+        }
     }
 
     @Override
@@ -169,13 +192,12 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private class SeekBarUpdateTask extends AsyncTask<Void, Integer, Void> {
-
+    private class SeekBarUpdateTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
             while (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                publishProgress(mMediaPlayer.getCurrentPosition());
+                publishProgress();
 
                 // 1초 대기
                 try {
@@ -189,8 +211,9 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
+        protected void onProgressUpdate(Void... values) {
             mCurrentTimeTextView.setText(getTime(mMediaPlayer.getCurrentPosition()));
+            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
         }
     }
 }
