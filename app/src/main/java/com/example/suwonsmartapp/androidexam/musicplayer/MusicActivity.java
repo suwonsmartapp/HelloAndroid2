@@ -169,7 +169,6 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         mMediaPlayer.reset();
         mCurrentTimeTextView.setText("0:00");
         mSeekBar.setProgress(0);
-        mSeekBarUpdateTask = null;
         mPlayButton.setSelected(false);
     }
 
@@ -214,6 +213,16 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         protected void onProgressUpdate(Void... values) {
             mCurrentTimeTextView.setText(getTime(mMediaPlayer.getCurrentPosition()));
             mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
 }
