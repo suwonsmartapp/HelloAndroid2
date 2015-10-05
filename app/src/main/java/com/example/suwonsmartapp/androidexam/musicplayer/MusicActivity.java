@@ -10,6 +10,7 @@ import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
     private SeekBarUpdateTask mSeekBarUpdateTask;
     private ImageButton mPlayButton;
+
+    private MediaMetadataCompat mMetaData;
 
     public static String getTime(long milliSeconds) {
         String result = "";
@@ -93,20 +96,19 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 pickFile();
                 break;
             case R.id.btn_play_pause:
-                if (mService.getMediaPlayer() != null) {
-                    if (!mService.getMediaPlayer().isPlaying()) {
-                        mService.getMediaPlayer().start(); // no need to call prepare(); create() does that for you
-                        v.setSelected(true);
+                // 뮤직 서비스에 Play 액션을 전달
+                Intent intent = new Intent(this, MusicService.class);
+                intent.setAction(MusicService.ACTION_PLAY);
+                intent.putExtra("metadata", mMetaData);
+                startService(intent);
 
-                        mSeekBarUpdateTask = new SeekBarUpdateTask();
-                        mSeekBarUpdateTask.execute();
-
-
-                    } else {
-                        mService.getMediaPlayer().pause();
-                        v.setSelected(false);
-                    }
+                // 버튼 이미지 변경
+                if (v.isSelected()) {
+                    v.setSelected(false);
+                } else {
+                    v.setSelected(true);
                 }
+
                 break;
         }
     }
@@ -156,10 +158,18 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         // 앨범 사진
         byte albumImage[] = retriever.getEmbeddedPicture();
+        Bitmap bitmap = null;
         if (null != albumImage) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
+            bitmap = BitmapFactory.decodeByteArray(albumImage, 0, albumImage.length);
             mImageView.setImageBitmap(bitmap);
         }
+
+        mMetaData = new MediaMetadataCompat.Builder()
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, bitmap)
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, artist)
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
+                .build();
 
         // 나머지 정보 표시
         mInfoTextView.setText(album + " / " + title + " / " + artist);
