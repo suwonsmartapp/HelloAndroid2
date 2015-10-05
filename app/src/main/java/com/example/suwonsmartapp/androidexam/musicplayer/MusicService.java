@@ -1,9 +1,12 @@
 package com.example.suwonsmartapp.androidexam.musicplayer;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
@@ -90,29 +93,6 @@ public class MusicService extends Service {
                     });
                 }
 
-                // Notification 작성
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-                // Hide the timestamp
-                builder.setShowWhen(false);
-                // Set the Notification style
-                builder.setStyle(new NotificationCompat.MediaStyle()
-                        .setMediaSession(mSession.getSessionToken())
-                        .setShowActionsInCompactView(0, 1, 2));
-                // Set the Notification color
-                builder.setColor(0xFFDB4437);
-                // Set the large and small icons
-                builder.setLargeIcon(metadata.getBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART));
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle(metadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
-                builder.setContentText(metadata.getString(MediaMetadataCompat.METADATA_KEY_ALBUM) + "\n" +
-                        metadata.getString(MediaMetadataCompat.METADATA_KEY_ARTIST));
-                builder.addAction(android.R.drawable.ic_media_previous, "prev", null);
-                builder.addAction(android.R.drawable.ic_media_pause, "pause", null);
-                builder.addAction(android.R.drawable.ic_media_next, "next", null);
-
-                // Notification 띄우기
-                ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).notify(1, builder.build());
-
                 if (!mMediaPlayer.isPlaying()) {
                     Log.d(TAG, "뮤직 서비스 : PLAY");
                     mMediaPlayer.start(); // no need to call prepare(); create() does that for you
@@ -120,6 +100,9 @@ public class MusicService extends Service {
                     Log.d(TAG, "뮤직 서비스 : PAUSE");
                     mMediaPlayer.pause();
                 }
+                showNotification(metadata);
+
+
                 break;
             case ACTION_PAUSE:
                 mMediaPlayer.pause();
@@ -131,6 +114,59 @@ public class MusicService extends Service {
 //        return START_STICKY;    // 서비스를 재시동 할 때 intent 를 null 을 받으며 재시동 한다
 //        return START_REDELIVER_INTENT;      // 서비스가 재시동 될 때 종료 직전의 intent를 다시 받아서 재시동 한다
 //        return START_STICKY_COMPATIBILITY;      // 재시동 보장 안 됨. 거의 안 쓸 것 같음
+    }
+
+    private void showNotification(MediaMetadataCompat metadata) {
+        // Notification 작성
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        // Hide the timestamp
+        builder.setShowWhen(false);
+        // Set the Notification style
+        builder.setStyle(new NotificationCompat.MediaStyle()
+                .setMediaSession(mSession.getSessionToken())
+                .setShowActionsInCompactView(0, 1, 2));
+        // Set the Notification color
+        builder.setColor(0xFFDB4437);
+        // Set the large and small icons
+        Bitmap bitmap = metadata.getBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART);
+        if (bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        }
+        builder.setLargeIcon(bitmap);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle(metadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
+        builder.setContentText(metadata.getString(MediaMetadataCompat.METADATA_KEY_ALBUM) + "\n" +
+                metadata.getString(MediaMetadataCompat.METADATA_KEY_ARTIST));
+        builder.addAction(android.R.drawable.ic_media_previous, "prev", null);
+
+        int icon;
+        if (mMediaPlayer.isPlaying()) {
+            icon = android.R.drawable.ic_media_pause;
+        } else {
+            icon = android.R.drawable.ic_media_play;
+        }
+        Intent musicStopIntent = new Intent(getApplicationContext(), MusicService.class);
+        musicStopIntent.putExtra("metadata", metadata);
+        musicStopIntent.setAction(ACTION_PLAY);
+
+        PendingIntent musicStopPendingIntent = PendingIntent.getService(getApplicationContext(),
+                2,
+                musicStopIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.addAction(icon, "pause", musicStopPendingIntent);
+        builder.addAction(android.R.drawable.ic_media_next, "next", null);
+
+        // Notification 터치 했을 때 실행할 PendingIntent 지정
+        Intent activityStartIntent = new Intent(getApplicationContext(), MusicActivity.class);
+        PendingIntent activityStartPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                1,
+                activityStartIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(activityStartPendingIntent);
+
+        // Notification 띄우기
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).notify(1, builder.build());
     }
 
     @Override
