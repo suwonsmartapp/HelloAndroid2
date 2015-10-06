@@ -33,6 +33,7 @@ import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
 import com.example.suwonsmartapp.androidexam.database.LogInActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLocalDatabaseActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLoginActivity;
+import com.example.suwonsmartapp.androidexam.drawer.NavigationDrawerActivity;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
 import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
@@ -107,6 +108,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "content provider, Loader - 연락처 ", ContactLoaderActivity.class);
         addItem(myData, "content provider, Loader - 사진 ", LoadPictureActivity.class);
         addItem(myData, "Service - Music Player", MusicActivity.class);
+        addItem(myData, "Navigation Drawer", NavigationDrawerActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

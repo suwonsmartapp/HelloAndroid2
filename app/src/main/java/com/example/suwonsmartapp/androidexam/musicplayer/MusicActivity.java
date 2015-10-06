@@ -267,6 +267,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
+            Log.d(TAG, "뮤직 서비스 : onServiceConnected");
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             MusicService.LocalBinder binder = (MusicService.LocalBinder) service;
             mService = binder.getService();
