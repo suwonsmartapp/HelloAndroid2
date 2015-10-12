@@ -38,7 +38,8 @@ public class ChatActivity extends AppCompatActivity implements ChatClient.Client
         mEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER
+                        && event.getAction() == KeyEvent.ACTION_UP) {
                     // 메세지를 서버에 전송
                     mChatClient.sendMessage(mEditText.getText().toString());
 
