@@ -31,7 +31,7 @@ dependencies {
 
     compile 'com.mcxiaoke.volley:library:1.0.19'
 
-    compile 'com.beardedhen:androidbootstrap:+'
+    compile 'com.beardedhen:androidbootstrap:2.0.0'
 
     // Parse 라이브러리
     compile 'com.parse.bolts:bolts-android:1.2.1'

@@ -30,6 +30,7 @@ import com.example.suwonsmartapp.androidexam.activity.WebActivity;
 import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
 import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
+import com.example.suwonsmartapp.androidexam.chat.ChatActivity;
 import com.example.suwonsmartapp.androidexam.database.LogInActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLocalDatabaseActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLoginActivity;
@@ -109,6 +110,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "content provider, Loader - 사진 ", LoadPictureActivity.class);
         addItem(myData, "Service - Music Player", MusicActivity.class);
         addItem(myData, "Navigation Drawer", NavigationDrawerActivity.class);
+        addItem(myData, "채팅", ChatActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
