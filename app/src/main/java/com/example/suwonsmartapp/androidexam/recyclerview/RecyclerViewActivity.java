@@ -13,7 +13,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_view);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, RecyclerViewFragment.newInstance())
+                .replace(R.id.container, new RecyclerViewFragment())
                 .commit();
     }
 }

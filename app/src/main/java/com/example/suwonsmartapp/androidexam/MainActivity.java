@@ -47,6 +47,7 @@ import com.example.suwonsmartapp.androidexam.parsing.json.WeatherActivity;
 import com.example.suwonsmartapp.androidexam.provider.ContactLoaderActivity;
 import com.example.suwonsmartapp.androidexam.provider.LoadPictureActivity;
 import com.example.suwonsmartapp.androidexam.receiver.BroadcastActivity;
+import com.example.suwonsmartapp.androidexam.recyclerview.RecyclerViewActivity;
 import com.example.suwonsmartapp.androidexam.thread.ThreadActivity;
 import com.example.suwonsmartapp.androidexam.viewpager.ScreenSlideActivity;
 
@@ -111,6 +112,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Service - Music Player", MusicActivity.class);
         addItem(myData, "Navigation Drawer", NavigationDrawerActivity.class);
         addItem(myData, "채팅", ChatActivity.class);
+        addItem(myData, "RecyclerView", RecyclerViewActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

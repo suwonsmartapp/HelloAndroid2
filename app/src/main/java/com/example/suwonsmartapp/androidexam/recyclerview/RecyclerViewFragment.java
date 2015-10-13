@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suwonsmartapp.androidexam.R;
-import com.example.suwonsmartapp.androidexam.provider.LoadPictureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +42,6 @@ public class RecyclerViewFragment extends Fragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAdapter = new LoadPictureAdapter(getActivity(), null, true);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -74,12 +71,13 @@ public class RecyclerViewFragment extends Fragment
             imageIdList.add(data.getInt(data.getColumnIndexOrThrow("_id")));
         }
 
-//        mAdapter.swapCursor(data);
+        mAdapter = new LoadPictureAdapter(getContext(), imageIdList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     // 데이타 리셋 처리
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+
     }
 }
