@@ -36,6 +36,6 @@ public class FragmentActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        mColorFragment.setColor(getRandomColor());
+//        mColorFragment.setColor(getRandomColor());
     }
 }
