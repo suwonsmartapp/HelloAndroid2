@@ -1,6 +1,7 @@
 package com.example.suwonsmartapp.androidexam.recyclerview;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
@@ -9,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.suwonsmartapp.androidexam.R;
 import com.suwonsmartapp.abl.AsyncBitmapLoader;
-
-import java.util.List;
 
 /**
  * Created by junsuk on 2015. 10. 13..
@@ -22,14 +22,14 @@ public class LoadPictureAdapter extends RecyclerView.Adapter<LoadPictureAdapter.
         implements AsyncBitmapLoader.BitmapLoadListener {
 
     private Context mContext;
-    private List mDataList;
+    private Cursor mCursor;
 
     // 다이나믹 비트맵 로더
     private AsyncBitmapLoader mAsyncBitmapLoader;
 
-    public LoadPictureAdapter(Context context, List data) {
+    public LoadPictureAdapter(Context context, Cursor data) {
         mContext = context;
-        mDataList = data;
+        mCursor = data;
 
         // 다이나믹 비트맵 로더 생성 및 이벤트 연결
         mAsyncBitmapLoader = new AsyncBitmapLoader(context);
@@ -41,10 +41,8 @@ public class LoadPictureAdapter extends RecyclerView.Adapter<LoadPictureAdapter.
         // 레이아웃 가져오기
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_picture, parent, false);
-
         // 홀더에 저장
-        ImageView iv = (ImageView) view.findViewById(R.id.imageView);
-        ViewHolder holder = new ViewHolder(iv);
+        ViewHolder holder = new ViewHolder(view);
 
         return holder;
     }
@@ -52,18 +50,32 @@ public class LoadPictureAdapter extends RecyclerView.Adapter<LoadPictureAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // 이미지 셋팅
+        if (position % 3 == 0) {
+            holder.textView.setText("a;lsdkjfa;lsdjkfl;ajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjal;sdjkf");
+        } else if (position % 3 == 1) {
+            holder.textView.setText("a;lsdkjfa;lsdjkfl;ajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjal;sdjkf");
+        } else {
+            holder.textView.setText("a;lsdkjfa;lsdjkfl;ajsdlf;kjaajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjajsdlf;kjasl;dfjal;jksdfl;ajksdl;fjl;ajksdl;fjal;sdjkf");
+        }
         mAsyncBitmapLoader.loadBitmap(position, holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mCursor.getCount();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        mCursor.moveToPosition(position);
+        final Cursor cursor = mCursor;
+        return cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
     }
 
     @Override
     public Bitmap getBitmap(int position) {
         // id 가져오기
-        long id = (long) mDataList.get(position);
+        long id = getItemId(position);
 
         // Bitmap 샘플링
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -79,10 +91,12 @@ public class LoadPictureAdapter extends RecyclerView.Adapter<LoadPictureAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageView;
+        public TextView textView;
 
-        public ViewHolder(ImageView itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView;
+            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            textView = (TextView) itemView.findViewById(R.id.textView);
         }
     }
 }
