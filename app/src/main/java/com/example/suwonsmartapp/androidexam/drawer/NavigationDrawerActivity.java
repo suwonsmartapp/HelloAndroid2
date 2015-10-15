@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.swiperefreshlayout.SwipeRefreshLayoutFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +95,11 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_swipe) {
+            // TODO 화면 변경
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, SwipeRefreshLayoutFragment.newInstance())
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

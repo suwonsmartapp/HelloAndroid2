@@ -14,10 +14,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
 
@@ -46,25 +44,6 @@ public class RecyclerViewFragment extends Fragment
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                int position = rv.getChildAdapterPosition(childView);
-
-                Toast.makeText(getActivity(), "position : " + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
         // Item 장식
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
