@@ -35,6 +35,7 @@ import com.example.suwonsmartapp.androidexam.database.LogInActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLocalDatabaseActivity;
 import com.example.suwonsmartapp.androidexam.database.parse.ParseLoginActivity;
 import com.example.suwonsmartapp.androidexam.drawer.NavigationDrawerActivity;
+import com.example.suwonsmartapp.androidexam.eventbus.EventBusAcivitiy;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
 import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
@@ -113,6 +114,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Navigation Drawer", NavigationDrawerActivity.class);
         addItem(myData, "채팅", ChatActivity.class);
         addItem(myData, "RecyclerView", RecyclerViewActivity.class);
+        addItem(myData, "EventBus", EventBusAcivitiy.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

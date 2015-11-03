@@ -141,6 +141,7 @@
         </activity>
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".eventbus.EventBusAcivitiy" />
     </application>
 
 </manifest>
