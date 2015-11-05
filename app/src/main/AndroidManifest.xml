@@ -142,7 +142,9 @@
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".eventbus.EventBusAcivitiy" />
-        <activity android:name=".compass.CompassActivity" />
+        <activity
+            android:name=".compass.CompassActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     private static final String TAG = CompassActivity.class.getSimpleName();
     private SensorManager mSensorManager;
     private Sensor mAccelSensor;
-    private Sensor mMagnaticSensor;
+    private Sensor mMagneticSensor;
     private float[] mGravity;
     private float[] mGeomagnetic;
     private float[] mOrientation;
@@ -43,14 +43,14 @@ public class CompassActivity extends Activity implements SensorEventListener {
         float[] orientation = new float[3];
 
         mAccelSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mMagnaticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mMagneticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mSensorManager.registerListener(this, mAccelSensor, SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mMagnaticSensor, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(this, mMagneticSensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
