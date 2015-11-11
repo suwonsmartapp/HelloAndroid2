@@ -4,6 +4,7 @@ package com.example.suwonsmartapp.androidexam;
 import android.app.Application;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.facebook.FacebookSdk;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
@@ -25,5 +26,8 @@ public class ParseApplication extends Application {
 
         // Bootstrap
         TypefaceProvider.registerDefaultIconSets();
+
+        // Facebook sdk
+        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 }

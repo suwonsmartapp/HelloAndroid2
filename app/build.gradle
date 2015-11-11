@@ -50,4 +50,7 @@ dependencies {
 
     // EventBus
     compile 'de.greenrobot:eventbus:2.4.0'
+
+    // Facebook
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
 }
