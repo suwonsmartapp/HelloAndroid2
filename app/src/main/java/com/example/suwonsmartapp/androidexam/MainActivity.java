@@ -30,6 +30,7 @@ import com.example.suwonsmartapp.androidexam.activity.WebActivity;
 import com.example.suwonsmartapp.androidexam.animation.AnimationActivity;
 import com.example.suwonsmartapp.androidexam.calendar.CalendarActivity;
 import com.example.suwonsmartapp.androidexam.calendar2.Calendar2Activity;
+import com.example.suwonsmartapp.androidexam.camera.CameraActivity;
 import com.example.suwonsmartapp.androidexam.chat.ChatActivity;
 import com.example.suwonsmartapp.androidexam.compass.CompassActivity;
 import com.example.suwonsmartapp.androidexam.database.LogInActivity;
@@ -117,6 +118,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "RecyclerView", RecyclerViewActivity.class);
         addItem(myData, "EventBus", EventBusAcivitiy.class);
         addItem(myData, "Compass", CompassActivity.class);
+        addItem(myData, "Camera", CameraActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
