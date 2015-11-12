@@ -22,6 +22,10 @@
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+
+    <!-- 레코딩 권한 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <!--
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
       to match your app's package name + ".permission.C2D_MESSAGE".
@@ -160,6 +164,8 @@
             android:name=".camera.CameraActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".facebook.FacebookLoginActivity" />
+
+        <activity android:name=".mediarecoder.MediaRecorderActivity" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
