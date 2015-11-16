@@ -39,6 +39,7 @@ import com.example.suwonsmartapp.androidexam.database.parse.ParseLoginActivity;
 import com.example.suwonsmartapp.androidexam.drawer.NavigationDrawerActivity;
 import com.example.suwonsmartapp.androidexam.eventbus.EventBusAcivitiy;
 import com.example.suwonsmartapp.androidexam.facebook.FacebookLoginActivity;
+import com.example.suwonsmartapp.androidexam.filemanager.FileManagerActivity;
 import com.example.suwonsmartapp.androidexam.fragment.FragmentActivity;
 import com.example.suwonsmartapp.androidexam.graphic.GraphicActivity;
 import com.example.suwonsmartapp.androidexam.layout.FrameLayoutActivity;
@@ -123,6 +124,7 @@ public class MainActivity extends ListActivity {
         addItem(myData, "Camera", CameraActivity.class);
         addItem(myData, "Facebook login", FacebookLoginActivity.class);
         addItem(myData, "녹음기", MediaRecorderActivity.class);
+        addItem(myData, "파일매니저", FileManagerActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

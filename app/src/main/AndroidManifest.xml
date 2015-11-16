@@ -22,7 +22,6 @@
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
     <!-- 레코딩 권한 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -42,10 +41,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -148,12 +147,12 @@
         <service
             android:name=".musicplayer.MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".drawer.NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".eventbus.EventBusAcivitiy" />
@@ -164,14 +163,13 @@
             android:name=".camera.CameraActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".facebook.FacebookLoginActivity" />
-
         <activity android:name=".mediarecoder.MediaRecorderActivity" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".filemanager.FileManagerActivity"></activity>
     </application>
 
 </manifest>
