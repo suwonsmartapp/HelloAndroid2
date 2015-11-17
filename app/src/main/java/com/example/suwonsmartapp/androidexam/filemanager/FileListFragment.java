@@ -6,16 +6,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
+import com.example.suwonsmartapp.androidexam.filemanager.adapters.FileInfoAdapter;
+import com.example.suwonsmartapp.androidexam.filemanager.models.FileInfo;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileListFragment extends Fragment {
+
+public class FileListFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String ARG_PATH = "param1";
 
     private String mPath;
@@ -52,18 +56,23 @@ public class FileListFragment extends Fragment {
         File file = new File(mPath);
         File[] files = file.listFiles();
 
-        List<String> fileList = new ArrayList();
+        List<FileInfo> fileList = new ArrayList();
         for (File f : files) {
-            fileList.add(f.isDirectory() + ", " + f.getName());
+            FileInfo fileInfo = new FileInfo();
+            fileInfo.setFile(f);
+            fileList.add(fileInfo);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1,
-                fileList);
+        FileInfoAdapter adapter = new FileInfoAdapter(getActivity(), fileList);
 
         mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(this);
 
         return view;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), "position : " + position, Toast.LENGTH_SHORT).show();
+    }
 }
