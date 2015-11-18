@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
 import com.example.suwonsmartapp.androidexam.filemanager.models.FileInfo;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * Created by junsuk on 15. 11. 17..
  */
-public class FileInfoAdapter extends BaseAdapter implements View.OnClickListener {
+public class FileInfoAdapter extends BaseAdapter {
 
     private static final String TAG = FileInfoAdapter.class.getSimpleName();
     private final List<FileInfo> mList;
@@ -126,8 +125,6 @@ public class FileInfoAdapter extends BaseAdapter implements View.OnClickListener
             holder.capacity.setText((fileInfo.getFile().getTotalSpace() / 1024 / 1024) + " MB");
         }
 
-        convertView.setOnClickListener(this);
-
         return convertView;
     }
 
@@ -140,12 +137,6 @@ public class FileInfoAdapter extends BaseAdapter implements View.OnClickListener
     public int getViewTypeCount() {
         return super.getViewTypeCount();
     }
-
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(mContext, "item click", Toast.LENGTH_SHORT).show();
-    }
-
 
     static class ViewHolder {
         CheckBox checkBox;
