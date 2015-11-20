@@ -3,8 +3,7 @@ package com.example.suwonsmartapp.androidexam.filemanager;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,11 @@ import de.greenrobot.event.EventBus;
 
 public class FileListFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String ARG_PATH = "param1";
+    private static final String TAG = FileListFragment.class.getSimpleName();
 
     private String mPath;
     private ListView mListView;
     private List<FileInfo> mFileList;
-    private Toolbar mToolbar;
 
     public FileListFragment() {
         // Required empty public constructor
@@ -55,18 +54,13 @@ public class FileListFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_file_list, container, false);
 
-        // Toolbar 설정
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        Log.d(TAG, "onCreateView");
+        View view = inflater.inflate(R.layout.fragment_file_list, container, false);
 
         mListView = (ListView) view.findViewById(R.id.lv_file);
 
         File file = new File(mPath);
-
-        // 타이틀에 경로 표시
-        mToolbar.setTitle(file.getName());
 
         // 리스트에 파일 목록 표시
         File[] files = file.listFiles();

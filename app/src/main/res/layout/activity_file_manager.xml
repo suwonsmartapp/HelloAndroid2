@@ -6,6 +6,38 @@
     android:orientation="vertical"
     tools:context="com.example.suwonsmartapp.androidexam.filemanager.FileManagerActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/AppTheme">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/tree_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="0"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+    </android.support.v7.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
