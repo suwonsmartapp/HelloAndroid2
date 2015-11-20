@@ -3,11 +3,11 @@ package com.example.suwonsmartapp.androidexam.filemanager;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
 import com.example.suwonsmartapp.androidexam.filemanager.event.ChangePathEvent;
@@ -56,11 +56,12 @@ public class FileManagerActivity extends AppCompatActivity {
 
     private void addManagerTreeView(String tag) {
         ManagerTreeView managerTreeView = new ManagerTreeView(this);
-        managerTreeView.setTag(tag);
+        managerTreeView.setName(tag);
         managerTreeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FileManagerActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().popBackStack((String) v.getTag(),
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
 

@@ -3,6 +3,7 @@ package com.example.suwonsmartapp.androidexam.filemanager;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +56,12 @@ public class FileListFragment extends Fragment implements AdapterView.OnItemClic
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        Log.d(TAG, "onCreateView");
+        for (int i = 0; i < getFragmentManager().getBackStackEntryCount(); i++) {
+            FragmentManager.BackStackEntry entry = getFragmentManager().getBackStackEntryAt(i);
+            Log.d(TAG, entry.toString());
+        }
+        Log.d(TAG, "=====================");
+
         View view = inflater.inflate(R.layout.fragment_file_list, container, false);
 
         mListView = (ListView) view.findViewById(R.id.lv_file);
