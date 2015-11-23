@@ -55,6 +55,17 @@ public class FileManagerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getSupportFragmentManager().popBackStack((String) v.getTag(),
                         0);
+
+                // Toolbar 에서 현재 클릭 된 경로 이후를 삭제
+                for (int i = mToolbarLayout.getChildCount() - 1; i > 0; i--) {
+                    ManagerTreeView childView = (ManagerTreeView) mToolbarLayout.getChildAt(i);
+                    String tag = (String) v.getTag();
+                    if (childView.getName().equals(tag) == false) {
+                        mToolbarLayout.removeView(childView);
+                    } else {
+                        break;
+                    }
+                }
             }
         });
 
