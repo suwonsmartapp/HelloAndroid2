@@ -45,6 +45,10 @@ public class ManagerTreeView extends LinearLayout {
         mTitleTextView.setText(title);
     }
 
+    public String getName() {
+        return (String) mTitleTextView.getTag();
+    }
+
     public void setName(String tag) {
         mTitleTextView.setTag(tag);
     }

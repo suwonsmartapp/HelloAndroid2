@@ -3,9 +3,9 @@ package com.example.suwonsmartapp.androidexam.filemanager;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -34,23 +34,16 @@ public class FileManagerActivity extends AppCompatActivity {
         // Toolbar 설정
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbarLayout = (LinearLayout) mToolbar.getRootView().findViewById(R.id.tree_container);
 
         mPathMap = new HashMap<>();
 
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, FileListFragment.newInstance(path))
-                .commit();
-
-        File file = new File(path);
-        mPathMap.put(path, file.getName());
-
-        mToolbarLayout = (LinearLayout) mToolbar.getRootView().findViewById(R.id.tree_container);
+        changePath(path);
     }
 
-    private void removeManagerTreeView(String tag) {
-        View removeView = mToolbarLayout.findViewWithTag(tag);
+    private void removeManagerTreeView(View removeView) {
         mToolbarLayout.removeView(removeView);
     }
 
@@ -61,7 +54,7 @@ public class FileManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().popBackStack((String) v.getTag(),
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        0);
             }
         });
 
@@ -105,10 +98,18 @@ public class FileManagerActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        // 스택이 비면 앱 종료 처리
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            finish();
+        }
+
+        Log.e(TAG, getSupportFragmentManager().getBackStackEntryCount() + "");
+
         // Back 키 눌렀을 때, Toolbar 에 경로를 하나씩 삭제
-        if (getSupportFragmentManager().getBackStackEntryCount() > -1) {
-            View removeView = mToolbarLayout.getChildAt(mToolbarLayout.getChildCount() - 1);
-            removeManagerTreeView((String) removeView.getTag());
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            ManagerTreeView removeView = (ManagerTreeView) mToolbarLayout.getChildAt(mToolbarLayout
+                    .getChildCount() - 1);
+            removeManagerTreeView(removeView);
         }
     }
 }
