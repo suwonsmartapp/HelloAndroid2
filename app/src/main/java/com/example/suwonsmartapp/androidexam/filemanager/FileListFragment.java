@@ -1,6 +1,8 @@
 
 package com.example.suwonsmartapp.androidexam.filemanager;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.suwonsmartapp.androidexam.R;
 import com.example.suwonsmartapp.androidexam.filemanager.adapters.FileInfoAdapter;
@@ -41,6 +45,22 @@ public class FileListFragment extends Fragment implements AdapterView.OnItemClic
         args.putString(ARG_PATH, path);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static String getMimeType(String url) {
+        String type = null;
+
+        // 파일명에 공백이 있을 때 확장자를 못 가져오는 이슈 해결책
+        // https://code.google.com/p/android/issues/detail?id=5510
+        String text = url.substring(url.lastIndexOf("."));
+        String extension = MimeTypeMap.getFileExtensionFromUrl(text);
+
+        // String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            type = mime.getMimeTypeFromExtension(extension.toLowerCase());
+        }
+        return type;
     }
 
     @Override
@@ -89,9 +109,20 @@ public class FileListFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         File file = mFileList.get(position).getFile();
+
         if (file.isDirectory()) {
+            // 폴더일 경우
             EventBus.getDefault().post(new ChangePathEvent(file));
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), getMimeType(file.getAbsolutePath()));
+            Intent chooserIntent = Intent.createChooser(intent, "파일 선택..");
+
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(chooserIntent);
+            } else {
+                Toast.makeText(getActivity(), "수행할 수 있는 앱이 없습니다", Toast.LENGTH_SHORT).show();
+            }
         }
     }
-
 }

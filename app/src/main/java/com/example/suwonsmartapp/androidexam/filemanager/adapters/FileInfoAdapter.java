@@ -122,7 +122,17 @@ public class FileInfoAdapter extends BaseAdapter {
         if (fileInfo.getFile().isDirectory()) {
             holder.capacity.setText("");
         } else {
-            holder.capacity.setText((fileInfo.getFile().getTotalSpace() / 1024 / 1024) + " MB");
+            String sizeTxt = "";
+            long size = fileInfo.getFile().length();
+            if (size < 1024) {
+                sizeTxt = size + " bytes";
+            } else if (size < 1024 * 1024) {
+                sizeTxt = (size / 1024) + " KB";
+            } else if (size < 1024 * 1024 * 1024) {
+                sizeTxt = (size / 1024 / 1024) + " MB";
+            }
+
+            holder.capacity.setText(sizeTxt);
         }
 
         return convertView;

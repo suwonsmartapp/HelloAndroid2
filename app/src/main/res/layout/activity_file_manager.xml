@@ -6,26 +6,13 @@
     android:orientation="vertical"
     tools:context="com.example.suwonsmartapp.androidexam.filemanager.FileManagerActivity">
 
-    <android.support.v7.widget.Toolbar
+    <com.example.suwonsmartapp.androidexam.filemanager.views.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/AppTheme">
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/tree_container"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-    </android.support.v7.widget.Toolbar>
+        android:theme="@style/AppTheme" />
 
     <FrameLayout
         android:id="@+id/container"
